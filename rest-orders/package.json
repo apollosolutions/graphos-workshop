@@ -21,6 +21,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@apollo/datasource-rest": "^4.3.2",
     "@apollo/server": "^4.0.0",
     "@apollo/subgraph": "latest",
     "graphql": "latest",

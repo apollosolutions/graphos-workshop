@@ -5,6 +5,7 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const resolvers = require("./resolvers");
+const OrdersAPI = require("./datasources/orders-api");
 const port = process.env.PORT ?? 4001;
 const subgraphName = require("../package.json").name;
 
@@ -23,7 +24,9 @@ async function main() {
       //  to be available in resolvers (i.e. context.foos)
       //
       // auth: req.headers.authentication,
-      // foos: new FooDataSource(),
+      dataSources: {
+        ordersAPI: new OrdersAPI()
+      }
     }),
     listen: { port },
   });
