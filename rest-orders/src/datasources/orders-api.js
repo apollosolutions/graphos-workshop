@@ -2,11 +2,11 @@ const { RESTDataSource } = require("@apollo/datasource-rest");
 
 // @TODO: Document this in the story
 class OrdersAPI extends RESTDataSource {
-    baseURL = "";
+  baseURL = "";
 
-    async getOrder(id) {
-        return this.get(`orders/${encodeURIComponent(id)}`);
-    }
+  async getOrder(id) {
+    return this.get(`orders/${encodeURIComponent(id)}`);
+  }
 }
 
 module.exports = OrdersAPI;
