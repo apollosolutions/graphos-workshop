@@ -11,8 +11,13 @@ const ProductsAPI = require("./datasources/products-api");
 const port = process.env.PORT ?? 4001;
 const subgraphName = require("../package.json").name;
 
-const client = new MongoClient('mongodb+srv://workshop-user:federationworkshop1@cluster0.m2kevbh.mongodb.net/?retryWrites=true&w=majority');
+
+const client = new MongoClient(
+  'mongodb+srv://workshop-user:federationworkshop1@cluster0.m2kevbh.mongodb.net/?retryWrites=true&w=majority'
+);
 client.connect();
+
+console.log(client.db().listCollections())
 
 class ContextValue {
   constructor({ req, server }) {
@@ -21,7 +26,7 @@ class ContextValue {
       productsAPI: new ProductsAPI({ 
         cache,
         contextValue: this,
-        collection: client.db().collection("products")
+        collection: client.db("ecommerce").collection("products")
       })
     }
   }
