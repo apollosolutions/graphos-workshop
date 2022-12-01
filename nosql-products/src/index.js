@@ -17,7 +17,6 @@ const client = new MongoClient(
 );
 client.connect();
 
-console.log(client.db().listCollections())
 
 class ContextValue {
   constructor({ req, server }) {

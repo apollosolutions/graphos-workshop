@@ -23,17 +23,19 @@ class ProductsAPI extends MongoDataSource {
   }
 
   async getVariant(variantId) {
-    return await this.findByFields({
+    const variations = await this.findByFields({
       id: variantId,
-      type: "variant"
+      type: "variation"
     });
+
+    return variations && variations[0] ? variations[0] : null;
   }
 
   async searchProducts(titleStartsWith) {
     // Query by search text
     const query = { $text: { $search: titleStartsWith } };
 
-    // Sory by relevance
+    // Sort by relevance
     const sort = { score: { $meta: "textScore" } };
 
     // Include only the `title` and `score` fields in each returned document
@@ -55,8 +57,35 @@ class ProductsAPI extends MongoDataSource {
     return await cursor.toArray();
   }
 
-  async searchVariants({ sizeStartsWith }) {
-    return;
+  async searchVariants(sizeStartsWith) {
+    // Query by search text
+    const query = {
+      type: "variation",
+      attribute_1_name: "Size",
+      $text: { 
+        $search: sizeStartsWith
+      }
+    };
+
+    // Sort by relevance
+    const sort = { score: { $meta: "textScore" } };
+
+    const projection = {
+      _id: 0,
+      id: 1,
+      name: 1,
+      regular_price: 1,
+      in_stock: 1,
+      images: 1,
+    };
+
+    const cursor = this.collection
+      .find(query)
+      .sort(sort)
+      .project(projection)
+      .limit(15);
+
+    return await cursor.toArray();
   }
 }
 
