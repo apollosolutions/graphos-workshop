@@ -2,6 +2,7 @@ module.exports = {
   Query: {
     // Returns the product
     product(_, { id }, { dataSources }) {
+      console.log(dataSources)
       return dataSources.productAPI.getProduct(id);
     }
   },
