@@ -16,7 +16,8 @@ class ProductsAPI extends MongoDataSource {
 
   async getProduct(productId) {
     const products = await this.findByFields({
-      id: productId
+      id: productId,
+      type: "variable"
     });
 
     return products && products[0] ? products[0] : null;
@@ -42,7 +43,7 @@ class ProductsAPI extends MongoDataSource {
 
   async searchProducts(titleStartsWith) {
     // Query by search text
-    const query = { $text: { $search: titleStartsWith } };
+    const query = { $text: { $search: titleStartsWith }, type: "variable" };
 
     // Sort by relevance
     const sort = { score: { $meta: "textScore" } };
