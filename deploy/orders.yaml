@@ -8,6 +8,6 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'subgraph', '--image', 'gcr.io/federation-workshop/orders','--allow-unauthenticated', '--region', 'us-east1']
+  args: ['run', 'deploy', 'subgraph-orders', '--image', 'gcr.io/federation-workshop/orders','--allow-unauthenticated', '--region', 'us-east1']
 images:
 - gcr.io/federation-workshop/orders
