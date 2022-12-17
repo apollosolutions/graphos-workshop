@@ -18,9 +18,8 @@ module.exports = {
     }
   },
   Product: {
-    __resolveReference: (product, { dataSources }) => {
+    __resolveReference: (_, { dataSources }) => {
       return dataSources.productsAPI.getProduct(id);
     }
-  
   }
 };

@@ -31,6 +31,15 @@ class ProductsAPI extends MongoDataSource {
     return variations && variations[0] ? variations[0] : null;
   }
 
+  async getProductVariants(parentSku) {
+    const variations = await this.findByFields({
+      type: "variation",
+      parent: parentSku
+    });
+
+    return variations && variations[0] ? variations : null;
+  }
+
   async searchProducts(titleStartsWith) {
     // Query by search text
     const query = { $text: { $search: titleStartsWith } };

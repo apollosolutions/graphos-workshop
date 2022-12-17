@@ -43,14 +43,18 @@ See Variant for more info.
 """
 type Product @key(fields: "id") {
   id: ID!
-  title: String
+  name: String!
+  sku: String!
   description: String
-  mediaUrl: String
+  images: [String]
+  price: Float
+  attributes: [Attribute]
+  variants: [Variant]
+}
 
-  """
-  Variants of the products to view specific size/color/price options
-  """
-  variants(searchInput: VariantSearchInput): [Variant]
+type Attribute {
+  name: String!
+  values: [String]
 }
 
 """
@@ -59,11 +63,10 @@ Variants are the entities that are added to carts and purchased
 """
 type Variant @key(fields: "id") {
   id: ID!
-
   """
-  Link back to the parent Product
+  Link back to the parent Product SKU
   """
-  product: Product
+  parent: Product
 
   """
   Optional color option for this variant
