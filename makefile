@@ -12,7 +12,8 @@ deploy-users:
 
 deploy-router:
 	echo "Running Google Cloud Build" && \
-	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF}
+	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
+	--config ./router/cloudbuild.yaml
 
 # Publish Schema to Apollo Studio
 publish-products:
