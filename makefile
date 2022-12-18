@@ -10,6 +10,9 @@ deploy-orders:
 deploy-users:
 	gcloud builds submit --config ./deploy/users.yaml
 
+deploy:
+	echo "Running Google Cloud Build" && \
+	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF}
 
 # Publish Schema to Apollo Studio
 publish-products:
