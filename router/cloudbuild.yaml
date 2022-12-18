@@ -1,9 +1,9 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/federation-workshop/router', '.']
+  args: ['build', '-t', 'gcr.io/federation-workshop/router', './router']
 # Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/router'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/federation-workshop/router']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

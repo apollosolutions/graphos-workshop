@@ -23,7 +23,7 @@ RUN mkdir config schema
 COPY /router.yaml config
 
 # Copy over rhai scripts for customizations
-COPY /rhai/scripts /dist/rhai/scripts
+# COPY /rhai/scripts /dist/rhai/scripts
 
 
 # Required so we can copy in libz.so.1
