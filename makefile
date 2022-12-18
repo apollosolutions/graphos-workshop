@@ -17,18 +17,18 @@ deploy:
 # Publish Schema to Apollo Studio
 publish-products:
 	APOLLO_KEY=$(APOLLO_KEY) \
-	rover subgraph publish Federation-Workshop-b6ypdo@current \
+	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./nosql-products/schema.graphql \
   	--name products --routing-url https://subgraph-products-j3nprurqka-ue.a.run.app
 
 publish-orders:
 	APOLLO_KEY=$(APOLLO_KEY) \
-	rover subgraph publish Federation-Workshop-b6ypdo@current \
+	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./rest-orders/schema.graphql \
   	--name orders --routing-url https://subgraph-orders-j3nprurqka-ue.a.run.app
 
 publish-users:
 	APOLLO_KEY=$(APOLLO_KEY) \
-	rover subgraph publish Federation-Workshop-b6ypdo@current \
+	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./sql-users/schema.graphql \
   	--name users --routing-url https://subgraph-users-j3nprurqka-ue.a.run.app
