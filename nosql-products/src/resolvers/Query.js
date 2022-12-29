@@ -9,8 +9,8 @@ module.exports = {
     },
     // Searches the product database
     searchProducts(_, { searchInput }, { dataSources }) {
-      const { titleStartsWith } = searchInput;
-      return dataSources.productsAPI.searchProducts(titleStartsWith);
+      const { titleContains, categories, limit } = searchInput;
+      return dataSources.productsAPI.searchProducts(titleContains, categories, limit);
     },
     searchVariants(_, { searchInput }, { dataSources }) {
       const { sizeStartsWith } = searchInput;

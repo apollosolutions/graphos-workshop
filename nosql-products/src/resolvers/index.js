@@ -5,7 +5,6 @@ const resolvers = {
   Product: {
     price: (parent) => parent.regular_price,
     description: (parent) => parent.regular_price,
-    images: (parent) => parent.images.split(","),
     attributes: (parent) => {
       return [
         {

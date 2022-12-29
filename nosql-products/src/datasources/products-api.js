@@ -41,10 +41,17 @@ class ProductsAPI extends MongoDataSource {
     return variations && variations[0] ? variations : null;
   }
 
-  async searchProducts(titleStartsWith) {
+  async searchProducts(titleContains, categories = [], limit = 15) {
     // Query by search text
-    const query = { $text: { $search: titleStartsWith }, type: "variable" };
+    const query = { $text: { $search: titleContains }, type: "variable" };
 
+    if (categories.length > 0) {
+      query.categories = {
+        // Mongodb array matching is case-sensitive
+        // To make it easier for front-end teams, we lowercase inputs automatically
+        $all: categories.map(category => category.toLowerCase())
+      }
+    }
     // Sort by relevance
     const sort = { score: { $meta: "textScore" } };
 
@@ -62,7 +69,7 @@ class ProductsAPI extends MongoDataSource {
       .find(query)
       .sort(sort)
       .project(projection)
-      .limit(15);
+      .limit(limit);
 
     return await cursor.toArray();
   }

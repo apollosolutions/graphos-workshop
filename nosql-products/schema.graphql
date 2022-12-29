@@ -27,7 +27,12 @@ type Query {
 Search filters for when returning Products
 """
 input ProductSearchInput {
-  titleStartsWith: String
+  "Specify part of the title of the product"
+  titleContains: String
+  "Limit the number of items returned"
+  limit: Int
+  "Specify a set of categories that the product is a part of"
+  categories: [String]
 }
 
 """
