@@ -20,19 +20,11 @@ type Order @key(fields: "id") {
   """
   The user who made the purchase
   """
-  buyer: User!
+
 
   """
   A list of all the items they purchased. This is the Variants, not the Products so we know exactly which
   product and which size/color/feature was bought
   """
-  items: [Variant!]!
-}
 
-type User @key(fields: "id", resolvable: false) {
-  id: ID!
-}
-
-type Variant @key(fields: "id", resolvable: false) {
-  id: ID!
 }

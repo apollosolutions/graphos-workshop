@@ -1,14 +1,11 @@
 module.exports = {
   Query: {
-    // Returns the order
-    order(_, { id }, { dataSources }) {
-      return dataSources.ordersAPI.getOrder(id);
+    // @TODO: Configure Query and return an order
+    order() {
+      return 
     }
   },
-  // @TODO: Add story here about resolving by references
+  // @TODO: Add story here about resolving by references for entites
   Order: {
-    __resolveReference: (order, { dataSources }) => {
-      return dataSources.ordersAPI.getOrder(order.id);
-    }
   }
 };
