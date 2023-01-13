@@ -10,6 +10,9 @@ module.exports = {
     getFeaturedProducts(_, { limit = 10 }, { dataSources }) {
       return dataSources.productsAPI.searchProducts(null, null, limit, true);
     },
+    getProductsByCategory(_, { category, limit = 10 }, { dataSources }) {
+      return dataSources.productsAPI.searchProducts(null, [category], limit);
+    },
     // Searches the product database
     searchProducts(_, { searchInput }, { dataSources }) {
       const { titleContains, categories, limit, featured } = searchInput;

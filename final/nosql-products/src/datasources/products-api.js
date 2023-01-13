@@ -14,6 +14,25 @@ class ProductsAPI extends MongoDataSource {
     });
   }
 
+  categoriesMatch = {
+    CLOTHING: "clothing",
+    TOPS: "tops",
+    BOTTOMS: "bottoms",
+    COLLECTIONS: "collections",
+    WOMEN: "women", 
+    MEN: "men",
+    HOODIES: "hoodies & sweatshirts",
+    SHORTS: "shorts",
+    PERFORMANCE: "performance fabrics",
+    UNDERWEAR: "bras & tanks",
+    ECO: "eco friendly",
+    PROMOTIONS: "promotions",
+    PANTS: "pants",
+    RECOMMENDATIONS: "erin recommends",
+    TEES: "tees",
+    YOGA: "new luma yoga collection"
+  }
+
   async getProduct(productId) {
     const products = await this.findByFields({
       id: productId,
@@ -57,7 +76,7 @@ class ProductsAPI extends MongoDataSource {
       query.categories = {
         // Mongodb array matching is case-sensitive
         // To make it easier for front-end teams, we lowercase inputs automatically
-        $all: categories.map(category => category.toLowerCase())
+        $all: categories.map(category => this.categoriesMatch[category])
       }
     }
 

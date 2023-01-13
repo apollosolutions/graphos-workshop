@@ -13,6 +13,11 @@ type Query {
   getFeaturedProducts(limit: Int): [Product]
 
   """
+  Get products based on a single category
+  """
+  getProductsByCategory(category: ProductCategory!, limit: Int): [Product]
+
+  """
   Get all available variants of products to shop for. Optionally provide some search filters
   """
   searchVariants(searchInput: VariantSearchInput! = {}): [Variant]
@@ -29,6 +34,28 @@ type Query {
 }
 
 """
+Available categories that a product can be classified as
+"""
+enum ProductCategory {
+  CLOTHING
+  TOPS
+  BOTTOMS
+  COLLECTIONS
+  WOMEN
+  MEN
+  HOODIES
+  SHORTS
+  PERFORMANCE
+  UNDERWEAR
+  ECO
+  PROMOTIONS
+  PANTS
+  RECOMMENDATIONS
+  TEES
+  YOGA
+}
+
+"""
 Search filters for when returning Products
 """
 input ProductSearchInput {
@@ -37,7 +64,7 @@ input ProductSearchInput {
   "Limit the number of items returned"
   limit: Int
   "Specify a set of categories that the product is a part of"
-  categories: [String]
+  categories: [ProductCategory]
   featured: Boolean
 }
 
