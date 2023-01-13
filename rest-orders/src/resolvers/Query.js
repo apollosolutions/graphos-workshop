@@ -1,11 +1,11 @@
 module.exports = {
   Query: {
-    // @TODO: Configure Query and return an order
+    // @TODO 2.1.3: Configure Query and return an order
     order() {
       return 
     }
   },
-  // @TODO: Add story here about resolving by references for entites
+  // @TODO 2.1.4 Add story here about resolving by references for entites
   Order: {
   }
 };
