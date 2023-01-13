@@ -4,13 +4,16 @@ module.exports = {
     product(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getProduct(id);
     },
-    variant(_, { id }, { dataSources}) {
+    variant(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getVariant(id);
+    },
+    getFeaturedProducts(_, { limit = 10 }, { dataSources }) {
+      return dataSources.productsAPI.searchProducts(null, null, limit, true);
     },
     // Searches the product database
     searchProducts(_, { searchInput }, { dataSources }) {
-      const { titleContains, categories, limit } = searchInput;
-      return dataSources.productsAPI.searchProducts(titleContains, categories, limit);
+      const { titleContains, categories, limit, featured } = searchInput;
+      return dataSources.productsAPI.searchProducts(titleContains, categories, limit, featured);
     },
     searchVariants(_, { searchInput }, { dataSources }) {
       const { sizeStartsWith } = searchInput;

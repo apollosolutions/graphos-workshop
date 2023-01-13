@@ -8,6 +8,11 @@ type Query {
   searchProducts(searchInput: ProductSearchInput! = {}): [Product]
 
   """
+  Get all featured products to be listed
+  """
+  getFeaturedProducts(limit: Int): [Product]
+
+  """
   Get all available variants of products to shop for. Optionally provide some search filters
   """
   searchVariants(searchInput: VariantSearchInput! = {}): [Variant]
@@ -33,6 +38,7 @@ input ProductSearchInput {
   limit: Int
   "Specify a set of categories that the product is a part of"
   categories: [String]
+  featured: Boolean
 }
 
 """
@@ -55,6 +61,7 @@ type Product @key(fields: "id") {
   price: Float
   attributes: [Attribute]
   variants: [Variant]
+  featured: Boolean!
 }
 
 type Attribute {

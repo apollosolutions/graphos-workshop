@@ -41,19 +41,25 @@ class ProductsAPI extends MongoDataSource {
     return variations && variations[0] ? variations : null;
   }
 
-  async searchProducts(titleContains, categories = [], limit = 15) {
+  async searchProducts(titleContains, categories = [], limit = 15, featured) {
     // Query by search text
-    const query = { $text: { $search: titleContains }, type: "variable" };
+    const query = { type: "variable" };
 
-    if (categories.length > 0) {
+    if (titleContains) {
+      query.$text = { $search: titleContains };
+    }
+
+    if (featured === true) {
+      query.featured = "1";
+    }
+
+    if (categories && categories.length > 0) {
       query.categories = {
         // Mongodb array matching is case-sensitive
         // To make it easier for front-end teams, we lowercase inputs automatically
         $all: categories.map(category => category.toLowerCase())
       }
     }
-    // Sort by relevance
-    const sort = { score: { $meta: "textScore" } };
 
     // Include only the `title` and `score` fields in each returned document
     const projection = {
@@ -63,13 +69,19 @@ class ProductsAPI extends MongoDataSource {
       regular_price: 1,
       in_stock: 1,
       images: 1,
+      featured: 1
     };
 
     const cursor = this.collection
       .find(query)
-      .sort(sort)
       .project(projection)
       .limit(limit);
+
+    if (titleContains) {
+      // Sort by relevance
+      const sort = { score: { $meta: "textScore" } };
+      cursor.sort(sort);
+    }
 
     return await cursor.toArray();
   }

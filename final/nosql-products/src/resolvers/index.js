@@ -21,6 +21,10 @@ const resolvers = {
       const variants = await dataSources.productsAPI.getProductVariants(parent.sku);
       // Attach the parent to the variant
       return variants.map(variant => ({ ...variant, parent }));
+    },
+    featured: (parent) => {
+      console.log(parent);
+      return parent.featured === "1"
     }
   },
   Variant: {
