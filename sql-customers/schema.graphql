@@ -1,0 +1,64 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+
+type Query {
+  users: [User]
+  user(id: ID!): User
+}
+
+"""
+An user account in our system
+"""
+type User @key(fields: "id") {
+  id: ID!
+
+  firstName: String!
+  lastName: String!
+  address: String
+  phone: String
+  email: String
+
+  """
+  The user's active cart session. Once the cart items have been purchases, they transition to an Order
+  """
+  cart: Cart
+
+  """
+  The users previous purchases
+  """
+  orders(filters: OrderFilters): [Order]
+
+}
+
+"""
+Search filters for when showing an users previous purchases
+"""
+input OrderFilters {
+  orderId: ID!
+  priceHigh: Float
+  priceLow: Float
+  itemsInOrder: Int
+}
+
+"""
+An user's saved cart session. Only one cart can be active at a time
+"""
+type Cart {
+  """
+  Items saved in the cart session
+  """
+  items: [Variant]
+
+  """
+  The current total of all the items in the cart, before taxes and shipping
+  """
+  subtotal: Float
+}
+
+type Order @key(fields: "id", resolvable: false) {
+  id: ID!
+}
+
+type Variant @key(fields: "id", resolvable: false) {
+  id: ID!
+}
