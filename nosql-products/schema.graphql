@@ -32,7 +32,7 @@ input ProductSearchInput {
   "Limit the number of items returned"
   limit: Int
   "Specify a set of categories that the product is a part of"
-  categories: [String]
+  categories: [Categories!]
 }
 
 """
@@ -55,6 +55,28 @@ type Product @key(fields: "id") {
   price: Float
   attributes: [Attribute]
   variants: [Variant]
+}
+
+"""
+Available categories that a product can be classified as
+"""
+enum Categories {
+  CLOTHING
+  TOPS
+  BOTTOMS
+  COLLECTIONS
+  WOMEN
+  MEN
+  HOODIES
+  SHORTS
+  PERFORMANCE
+  UNDERWEAR
+  ECO
+  PROMOTIONS
+  PANTS
+  RECOMMENDATIONS
+  TEES
+  YOGA
 }
 
 type Attribute {
