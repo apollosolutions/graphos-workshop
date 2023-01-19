@@ -6,9 +6,8 @@ const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const resolvers = require("./resolvers");
 const CustomerDB = require("./datasources/customer-db");
-const port = process.env.PORT ?? 4001;
+const port = process.env.PORT ?? 4003;
 const subgraphName = require("../package.json").name;
-const knex = require("knex")
 
 const knexConfig = {
   client: 'mysql',
@@ -21,16 +20,18 @@ const knexConfig = {
   }
 }
 
-const db = new CustomerDB(knexConfig)
-
-//class ContextValue {
-//  constructor({ req, server }) {
-//    const { cache } = server;
-//    this.dataSources = {
-//      customerDB: new CustomerDB(knexConfig)
-//    }
-//  }
-//}
+class ContextValue {
+ constructor({ req, server }) {
+   const { cache } = server;
+   this.dataSources = {
+     customerDB: new CustomerDB({
+      config,
+      cache,
+      contextValue: this
+    })
+   }
+ }
+}
 
 async function main() {
   const typeDefs = gql(
@@ -41,8 +42,7 @@ async function main() {
 
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
-    instrospection: true,
-    dataSources: () => ({db})
+    instrospection: true
   });
 
   const { url } = await startStandaloneServer(server, {
