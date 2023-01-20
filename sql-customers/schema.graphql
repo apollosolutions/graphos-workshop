@@ -9,11 +9,11 @@ type Query {
 """
 An user account in our system
 """
-type User @key(fields: "id") {
-  id: ID!
+type User @key(fields: "customer_id") {
+  customer_id: ID!
 
-  firstName: String!
-  lastName: String!
+  first_name: String
+  last_name: String
   address: String
   phone: String
   email: String
@@ -21,7 +21,7 @@ type User @key(fields: "id") {
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
   """
-  cart: Cart
+  active_cart: Cart
 
   """
   The users previous purchases

@@ -1,10 +1,11 @@
 module.exports = {
   Query: {
     // Returns the product
-    Users(_, __, { dataSources }) {
+    users(_, __, { dataSources }) {
       return dataSources.customerDB.getCustomers();
     },
-    User(_, { id }, { dataSources}) {
+    user(_, { id }, { dataSources }) {
+      console.log('In User resolver, id = ' + id);
       return dataSources.customerDB.getCustomer(id);
     }
   }

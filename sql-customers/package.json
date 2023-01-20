@@ -30,7 +30,8 @@
     "mongodb": "^4.12.1",
     "datasource-sql": "^2.0.1",
     "knex": ">=0.95.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.0.1"
   },
   "devDependencies": {
     "jest": "29.3.1",

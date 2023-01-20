@@ -10,12 +10,12 @@ const port = process.env.PORT ?? 4003;
 const subgraphName = require("../package.json").name;
 
 const knexConfig = {
-  client: 'mysql',
+  client: 'mysql2',
   connection: {
     host: '34.75.163.58',
     port: 3306,
-    user: 'workshop-user',
-    password: 'federationworkshop1',
+    user: 'apollo-user',
+    password: 'enterpriseworkshop1',
     database: 'customer'
   }
 }
@@ -25,7 +25,7 @@ class ContextValue {
    const { cache } = server;
    this.dataSources = {
      customerDB: new CustomerDB({
-      config,
+      config: knexConfig,
       cache,
       contextValue: this
     })
