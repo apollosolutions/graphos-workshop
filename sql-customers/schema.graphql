@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
 
 type Query {
   users: [User]
@@ -52,7 +52,7 @@ type Cart {
   """
   The current total of all the items in the cart, before taxes and shipping
   """
-  subtotal: Float @requires(fields: "variant { price }")
+  subtotal: Float @requires(fields: "items { price }")
 }
 
 type Order @key(fields: "id", resolvable: false) {

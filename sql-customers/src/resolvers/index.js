@@ -9,14 +9,19 @@ const resolvers = {
     items: (orderIds) => {
       const orders = orderIds.split(',');
       // Returns an array of objects ({id: id})
-      return orders.map(id => {id});
+      return orders.map(id => ({ id }));
+      
     },
-    subtotal: (parent) => {
-      const orders = parent.items;
-      return orders.reduce(
-        (accumulator, currentOrder) => accumulator + currentOrder.price,
-        0
-      );
+    subtotal: (parent, args, context, info) => {
+      if (parent.items && parent.items.length > 0) {
+        const orders = parent.items;
+        return orders.reduce(
+          (accumulator, currentOrder) => accumulator + currentOrder.price,
+          0
+        );
+      }
+
+      return 0;
     }
   }
 };
