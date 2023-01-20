@@ -24,7 +24,6 @@
     "@apollo/datasource-rest": "^4.3.2",
     "@apollo/server": "^4.0.0",
     "@apollo/subgraph": "latest",
-    "apollo-datasource-mongodb": "^0.5.4",
     "graphql": "latest",
     "graphql-tag": "latest",
     "mongodb": "^4.12.1",

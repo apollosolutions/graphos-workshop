@@ -21,7 +21,7 @@ type User @key(fields: "customer_id") {
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
   """
-  active_cart: Cart
+  activeCart: Cart
 
   """
   The users previous purchases
@@ -52,7 +52,7 @@ type Cart {
   """
   The current total of all the items in the cart, before taxes and shipping
   """
-  subtotal: Float
+  subtotal: Float @requires(fields: "variant { price }")
 }
 
 type Order @key(fields: "id", resolvable: false) {
@@ -61,4 +61,5 @@ type Order @key(fields: "id", resolvable: false) {
 
 type Variant @key(fields: "id", resolvable: false) {
   id: ID!
+  price: Float! @external
 }
