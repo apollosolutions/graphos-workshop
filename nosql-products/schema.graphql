@@ -110,3 +110,21 @@ type Variant @key(fields: "id") {
   """
   size: String
 }
+
+"""
+An user's saved cart session. Only one cart can be active at a time
+"""
+type Cart @key(fields: "owner { id }") {
+  """
+  Owner of the cart session
+  """
+  owner: User
+  """
+  Items saved in the cart session
+  """
+  items: [Variant]
+}
+
+type User @key(fields: "id", resolvable: false) {
+  id: ID!
+}

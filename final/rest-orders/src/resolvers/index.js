@@ -5,7 +5,7 @@ const resolvers = {
       return dataSources.ordersAPI.getOrder(id);
     }
   },
-  // @TODO: Add story here about resolving by references
+  // @WORKSHOP: Add story here about resolving by references
   Order: {
     __resolveReference: (order, { dataSources }) => {
       return dataSources.ordersAPI.getOrder(order.id);

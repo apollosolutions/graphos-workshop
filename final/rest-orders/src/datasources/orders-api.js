@@ -1,6 +1,6 @@
 const { RESTDataSource } = require("@apollo/datasource-rest");
 
-// @TODO: Document this in the story
+// @WORKSHOP: Document this in the story
 class OrdersAPI extends RESTDataSource {
   baseURL = "https://rest-api-j3nprurqka-uc.a.run.app/api";
 

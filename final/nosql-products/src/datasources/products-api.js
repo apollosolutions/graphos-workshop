@@ -1,6 +1,6 @@
 const { MongoDataSource } = require("apollo-datasource-mongodb");
 
-// @TODO: Document this in the story
+// @WORKSHOP: Document this in the story
 class ProductsAPI extends MongoDataSource {
   constructor({ collection, cache, contextValue }) {
     super(collection);
