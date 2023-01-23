@@ -10,6 +10,7 @@ type Query {
 
 """
 Returns information about a specific purchase
+@WORKSHOP: 2.1.1 Include user and items attributes
 """
 type Order @key(fields: "id") {
   """
@@ -28,3 +29,7 @@ type Order @key(fields: "id") {
   """
 
 }
+
+"""
+@WORKSHOP: 2.1.2 Define Stub Types for User and Variant
+"""
