@@ -33,9 +33,18 @@ class ProductsAPI extends MongoDataSource {
     YOGA: "new luma yoga collection"
   }
 
-  async getProduct(productId) {
+  async getProduct({id, sku}) {
+    const params = {type: "variable"};
+
+    if (id) {
+      params.id = id;
+    }
+
+    if (sku) {
+      params.sku = sku;
+    }
+
     const products = await this.findByFields({
-      id: productId,
       type: "variable"
     });
 

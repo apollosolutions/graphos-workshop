@@ -3,16 +3,18 @@ const { Query } = require("./Query");
 const resolvers = {
   Query,
   User: {
-    activeCart: (parent) => parent.active_cart
+    id: (parent) => parent.customer_id,
+    activeCart: (parent) => parent.active_cart,
+    firstName: (parent) => parent.first_name,
+    lastName: (parent) => parent.last_name
   },
   Cart: {
-    items: (orderIds) => {
-      const orders = orderIds.split(',');
-      // Returns an array of objects ({id: id})
-      return orders.map(id => ({ id }));
-      
+    items: (ids) => {
+      const variants = ids.split(',');
+      return variants.map(id => ({id}));
     },
     subtotal: (parent, args, context, info) => {
+      console.log(parent);
       if (parent.items && parent.items.length > 0) {
         const orders = parent.items;
         return orders.reduce(
