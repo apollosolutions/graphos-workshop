@@ -31,8 +31,8 @@ const resolvers = {
       const variant = await dataSources.productsAPI.getVariant(reference.id);
       return variant;
     },
-    colorway: (root) => root.attribute_1_values[0],
-    size: (root) => root.attribute_2_values[0],
+    colorway: (root) => root.attribute_2_values[0],
+    size: (root) => root.attribute_1_values[0],
     price: (root) => root.regular_price,
     parent: async (root, __, { dataSources }) => {
       return await dataSources.productsAPI.getProduct({sku: root.parent });

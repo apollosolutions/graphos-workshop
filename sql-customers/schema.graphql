@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
 
 type Query {
   users: [User]
@@ -42,7 +42,7 @@ input OrderFilters {
 """
 An user's saved cart session. Only one cart can be active at a time
 """
-type Cart {
+type Cart @key(fields: "owner { id }") {
   """
   Owner of the cart session
   """
@@ -51,6 +51,7 @@ type Cart {
   Items saved in the cart session
   """
   items: [Variant]
+  subtotal: Float! @requires(fields: "items { price }")
 }
 
 type Order @key(fields: "id", resolvable: false) {
@@ -59,4 +60,5 @@ type Order @key(fields: "id", resolvable: false) {
 
 type Variant @key(fields: "id", resolvable: false) {
   id: ID!
+  price: Float! @external
 }
