@@ -1,11 +1,11 @@
 const resolvers = {
   Query: {
-    // @TODO 2.1.3: Configure Query and return an order
+    // @WORKSHOP 2.3.1: Create a Query resolver for order operation and return an order
     order() {
       return 
     }
   },
-  // @TODO 2.1.4 Add story here about resolving by references for entites
+  // @WORKSHOP 2.3.2: Add a reference resolver for Order Entity
   Order: {
   }
 };

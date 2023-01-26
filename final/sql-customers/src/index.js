@@ -1,5 +1,3 @@
-const { MongoClient } = require("mongodb");
-
 const gql = require("graphql-tag");
 const { readFileSync } = require("fs");
 const { ApolloServer } = require("@apollo/server");
@@ -7,28 +5,32 @@ const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 
 const resolvers = require("./resolvers");
-const ProductsAPI = require("./datasources/products-api");
-const port = process.env.PORT ?? 4001;
+const CustomerDB = require("./datasources/customer-db");
+const port = process.env.PORT ?? 4003;
 const subgraphName = require("../package.json").name;
 
-
-const client = new MongoClient(
-  'mongodb+srv://workshop-user:federationworkshop1@cluster0.m2kevbh.mongodb.net/?retryWrites=true&w=majority'
-);
-client.connect();
-
+const knexConfig = {
+  client: 'mysql2',
+  connection: {
+    host: '34.75.163.58',
+    port: 3306,
+    user: 'apollo-user',
+    password: 'enterpriseworkshop1',
+    database: 'customer'
+  }
+}
 
 class ContextValue {
-  constructor({ req, server }) {
-    const { cache } = server;
-    this.dataSources = {
-      productsAPI: new ProductsAPI({ 
-        cache,
-        contextValue: this,
-        collection: client.db("ecommerce").collection("products")
-      })
-    }
-  }
+ constructor({ req, server }) {
+   const { cache } = server;
+   this.dataSources = {
+     customerDB: new CustomerDB({
+      config: knexConfig,
+      cache,
+      contextValue: this
+    })
+   }
+ }
 }
 
 async function main() {
@@ -37,9 +39,12 @@ async function main() {
       encoding: "utf-8",
     })
   );
+
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
+    instrospection: true
   });
+
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => new ContextValue({ req, server }),
     listen: {

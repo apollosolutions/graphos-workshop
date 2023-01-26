@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
 
 type Query {
   users: [User]
@@ -12,8 +12,8 @@ An user account in our system
 type User @key(fields: "id") {
   id: ID!
 
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   address: String
   phone: String
   email: String
@@ -21,13 +21,12 @@ type User @key(fields: "id") {
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
   """
-  cart: Cart
+  activeCart: Cart
 
   """
   The users previous purchases
   """
   orders(filters: OrderFilters): [Order]
-
 }
 
 """
@@ -43,16 +42,16 @@ input OrderFilters {
 """
 An user's saved cart session. Only one cart can be active at a time
 """
-type Cart {
+type Cart @key(fields: "owner { id }") {
+  """
+  Owner of the cart session
+  """
+  owner: User
   """
   Items saved in the cart session
   """
   items: [Variant]
-
-  """
-  The current total of all the items in the cart, before taxes and shipping
-  """
-  subtotal: Float
+  subtotal: Float! @requires(fields: "items { price }")
 }
 
 type Order @key(fields: "id", resolvable: false) {
@@ -61,4 +60,5 @@ type Order @key(fields: "id", resolvable: false) {
 
 type Variant @key(fields: "id", resolvable: false) {
   id: ID!
+  price: Float! @external
 }

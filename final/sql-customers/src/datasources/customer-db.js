@@ -10,11 +10,13 @@ class CustomerDB extends SQLDataSource {
   }
 
   async getCustomers() {
-    return this.knex.select("*").from("customers");
+    const customer = await this.knex.select('*').from('customers');
+    return customer;
   };
 
-  async GetCustomer(id) {
-    return this.knex.select('*').from("customers").where('id', id);
+  async getCustomer(id) {
+    const customers = await this.knex.select('*').from('customers').where('customer_id', id);
+    return customers.length > 0 ? customers[0] : null;
   }
 }
 
