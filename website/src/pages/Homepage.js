@@ -5,19 +5,23 @@ import Spinner from '../components/Spinner';
 import {Heading, SimpleGrid, Stack, Text, VStack} from '@chakra-ui/react';
 import {gql, useQuery} from '@apollo/client';
 
-export const GET_LATEST_PRODUCTS = gql`
-  query HomepageProducts {
-    products {
+export const GET_FEATURED_PRODUCTS = gql`
+  query HomePageFeaturedProducts($limit: Int) {
+    getFeaturedProducts(limit: $limit) {
       id
-      title
+      name
       description
-      mediaUrl
+      images
     }
   }
 `;
+
 export default function HomePage() {
-  const {error, loading, data} = useQuery(GET_LATEST_PRODUCTS);
-  if (error) return <Error error={error.message} />;
+  const {error, loading, data} = useQuery(GET_FEATURED_PRODUCTS, {
+    variables: {limit: 10}
+  });
+
+  if (error) return <Error error={error} />;
   return (
     <Stack direction="column" spacing="12">
       <VStack direction="column" spacing="2" py="10">
@@ -32,7 +36,7 @@ export default function HomePage() {
           <Spinner />
         ) : (
           <SimpleGrid columns={[1, null, 2]} spacing={4}>
-            {data?.products.map(product => (
+            {data?.getFeaturedProducts.map(product => (
               <ProductCard key={product.id} {...product} />
             ))}
           </SimpleGrid>

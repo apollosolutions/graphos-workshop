@@ -13,13 +13,11 @@ import {Link} from 'react-router-dom';
 
 export default function ProductCard({
   id,
-  title,
+  name,
   description,
-  mediaUrl,
+  images,
   overallRating = 5
-  // reviewsForLocation: reviews = []
 }) {
-  // const {comment} = reviews[0] ?? {};
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const zoomAnimation = prefersReducedMotion
@@ -37,28 +35,24 @@ export default function ProductCard({
           opacity={'95%'}
           _groupHover={zoomAnimation}
           _groupFocus={zoomAnimation}
-          src={mediaUrl}
-          alt={title}
+          src={images[0]}
+          alt={name}
           objectFit="cover"
         />
       </Box>
       <Flex direction="column" p="3" justify="space-between" minH="120px">
         <Heading as="h2" size="md" my="4">
-          {title}
+          {name}
         </Heading>
-        {overallRating ? (
+        {
           <Flex direction="column" minH="100px" justify="space-between">
             <Text as="i" noOfLines={2}>{`"${description}"`}</Text>
             <Flex direction="row" py="4" justify="space-between">
               <ReviewRating isHalf rating={overallRating} size={20} />
-              <Button>Read More</Button>
+              <Button>See More</Button>
             </Flex>
           </Flex>
-        ) : (
-          <Flex direction="row" justify="right">
-            <Button>Leave a Review</Button>
-          </Flex>
-        )}
+        }
       </Flex>
     </Box>
   );
@@ -66,9 +60,8 @@ export default function ProductCard({
 
 ProductCard.propTypes = {
   id: PropTypes.string,
-  title: PropTypes.string,
+  name: PropTypes.string,
   description: PropTypes.string,
-  mediaUrl: PropTypes.string,
+  images: PropTypes.array,
   overallRating: PropTypes.number
-  // reviewsForLocation: PropTypes.array
 };

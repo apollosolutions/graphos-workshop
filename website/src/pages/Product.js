@@ -1,14 +1,9 @@
-import ReviewRating from '../components/ReviewRating';
-
 import Spinner from '../components/Spinner';
-// import SubmitReview from '../components/SubmitReview';
 import {Error} from './Error';
 import {
   Flex,
-  HStack,
   Heading,
   Image,
-  Skeleton,
   Stack,
   StackDivider,
   Text
@@ -18,19 +13,21 @@ import {useParams} from 'react-router-dom';
 
 export const GET_PRODUCT_DETAILS = gql`
   fragment ProductFragment on Product {
-    averageRating
-    reviews {
-      content
-      rating
+    variants {
+      colorway
+      price
+      parent {
+        description
+      }
     }
   }
 
   query GetProductDetails($productId: ID!) {
     product(id: $productId) {
       id
-      title
+      name
       description
-      mediaUrl
+      images
       ...ProductFragment @defer
     }
   }
@@ -45,28 +42,19 @@ export default function Product() {
   const {loading, error, data = {}} = response;
   if (loading) return <Spinner />;
   if (error) return <Error error={error.message} />;
-  const {title, description, mediaUrl, reviews, averageRating} =
-    data?.product || {};
+  const {name, description, images} = data?.product || {};
 
   return (
     <>
       {data && (
         <Stack direction="column" px="12" spacing="6" mb="12">
           <Heading as="h1" size="lg">
-            {title}
+            {name}
           </Heading>
-          <Skeleton isLoaded={reviews !== undefined} w="192px">
-            <HStack>
-              {averageRating && (
-                <ReviewRating isHalf size={16} rating={averageRating || 0} />
-              )}
-              <div>({reviews?.length || '-'})</div>
-            </HStack>
-          </Skeleton>
           <Stack direction="column" spacing="6">
             <Image
-              src={mediaUrl}
-              alt={title}
+              src={images[0]}
+              alt={name}
               objectFit="cover"
               width="100%"
               height="500px"
@@ -89,25 +77,8 @@ export default function Product() {
                 divider={<StackDivider borderColor="gray.200" />}
               >
                 <Heading as="h2" size="md" mb="2" marginTop={8}>
-                  What other users have to say
+                  Product Variants
                 </Heading>
-                <Skeleton isLoaded={reviews !== undefined} h="100px">
-                  {reviews?.length === 0 ? (
-                    <Text>No reviews yet</Text>
-                  ) : (
-                    reviews?.map(({content, rating}, i) => (
-                      <Stack
-                        direction="column"
-                        spacing="1"
-                        key={`${i}-${rating}`}
-                        py="8"
-                      >
-                        <ReviewRating size={16} rating={rating} />
-                        <Text py="2">{content}</Text>
-                      </Stack>
-                    ))
-                  )}
-                </Skeleton>
               </Stack>
             </Stack>
           </Flex>

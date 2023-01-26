@@ -11,7 +11,7 @@ export default function Nav() {
       p="4"
     >
       <Box as={Link} to="/">
-        <img src={KBTLogo} alt="BigCo Inc. logo"/>
+        <img src={KBTLogo} alt="BigCo Inc. logo" />
       </Box>
     </Flex>
   );

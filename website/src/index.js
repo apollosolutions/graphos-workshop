@@ -14,8 +14,7 @@ import theme from './theme.js';
 import {ChakraProvider} from '@chakra-ui/react';
 
 const httpLink = new HttpLink({
-  uri: 'https://main--hack-the-e-commerce.apollographos.net/graphql'
-  // uri: 'https://apollo-router-railway-production.up.railway.app/'
+  uri: 'https://router-j3nprurqka-ue.a.run.app/'
 });
 
 const delayMiddleware = new ApolloLink((operation, forward) => {
