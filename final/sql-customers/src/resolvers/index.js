@@ -6,7 +6,14 @@ const resolvers = {
     id: (parent) => parent.customer_id,
     activeCart: (parent) => parent.active_cart,
     firstName: (parent) => parent.first_name,
-    lastName: (parent) => parent.last_name
+    lastName: (parent) => parent.last_name,
+    orders: (parent) => {
+      if (parent.orders) {
+        const orders = parent.orders.split(",");
+        return orders.map(orderId => ({ id: orderId }))
+      }
+      return [];
+    }
   },
   Cart: {
     items: (ids) => {

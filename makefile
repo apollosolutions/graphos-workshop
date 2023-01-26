@@ -7,8 +7,8 @@ deploy-products:
 deploy-orders:
 	gcloud builds submit --config ./deploy/orders.yaml
 
-deploy-users:
-	gcloud builds submit --config ./deploy/users.yaml
+deploy-customers:
+	gcloud builds submit --config ./deploy/customers.yaml
 
 deploy-router:
 	echo "Running Google Cloud Build" && \
@@ -28,8 +28,12 @@ publish-orders:
  	--schema ./final/rest-orders/schema.graphql \
   	--name orders --routing-url https://subgraph-orders-j3nprurqka-ue.a.run.app
 
-publish-users:
+publish-customers:
 	APOLLO_KEY=$(APOLLO_KEY) \
 	rover subgraph publish $(APOLLO_GRAPH_REF) \
- 	--schema ./final/sql-users/schema.graphql \
-  	--name users --routing-url https://subgraph-users-j3nprurqka-ue.a.run.app
+ 	--schema ./final/sql-customers/schema.graphql \
+  	--name customers --routing-url https://subgraph-customers-j3nprurqka-ue.a.run.app
+
+delete-users:
+	APOLLO_KEY=$(APOLLO_KEY) \
+	rover subgraph delete --name orders $(APOLLO_GRAPH_REF)
