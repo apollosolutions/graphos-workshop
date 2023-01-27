@@ -6,7 +6,6 @@ const resolvers = {
     price: (root) => root.regular_price,
     description: (root) => root.description,
     attributes: (root) => {
-      console.log(root)
       return [
         {
           name: root.attribute_1_name,
