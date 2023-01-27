@@ -18,7 +18,7 @@ module.exports = {
       const { titleContains, categories, limit, featured } = searchInput;
       return dataSources.productsAPI.searchProducts(titleContains, categories, limit, featured);
     },
-    searchVariants(_, { searchInput }, { dataSources }) {
+    searchProductVariants(_, { searchInput }, { dataSources }) {
       const { sizeStartsWith } = searchInput;
       return dataSources.productsAPI.searchVariants(sizeStartsWith);
     }

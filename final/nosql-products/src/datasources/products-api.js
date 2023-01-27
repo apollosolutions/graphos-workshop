@@ -97,7 +97,12 @@ class ProductsAPI extends MongoDataSource {
       regular_price: 1,
       in_stock: 1,
       images: 1,
-      featured: 1
+      featured: 1,
+      attribute_1_values: 1,
+      attribute_2_values: 1,
+      attribute_1_name: 1,
+      attribute_2_name: 1,
+      sku: 1
     };
 
     const cursor = this.collection
@@ -134,6 +139,8 @@ class ProductsAPI extends MongoDataSource {
       regular_price: 1,
       in_stock: 1,
       images: 1,
+      attribute_1_values: 1,
+      attribute_2_values: 1
     };
 
     const cursor = this.collection
