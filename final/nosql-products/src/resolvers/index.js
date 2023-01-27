@@ -36,7 +36,8 @@ const resolvers = {
     price: (root) => root.regular_price,
     parent: async (root, __, { dataSources }) => {
       return await dataSources.productsAPI.getProduct({sku: root.parent });
-    }
+    },
+    inStock: (root) => (root.inStock === "1")
   }
 };
 

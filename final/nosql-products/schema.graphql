@@ -121,4 +121,9 @@ type ProductVariant @key(fields: "id") {
   Optional size option for this variant
   """
   size: String
+
+  """
+  Variant is available for purchase
+  """
+  inStock: Boolean!
 }
