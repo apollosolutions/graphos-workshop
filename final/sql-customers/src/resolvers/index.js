@@ -10,7 +10,6 @@ const resolvers = {
     activeCart: (parent) => parent.active_cart,
     firstName: (parent) => parent.first_name,
     lastName: (parent) => parent.last_name,
-    email: (parent) => parent.email,
     orders: (parent) => {
       if (parent.orders) {
         const orders = parent.orders.split(",");
