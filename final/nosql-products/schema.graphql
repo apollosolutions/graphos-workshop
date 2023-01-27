@@ -5,22 +5,22 @@ type Query {
   """
   Get all available products to shop for. Optionally provide some search filters
   """
-  searchProducts(searchInput: ProductSearchInput! = {}): [Product]
+  searchProducts(searchInput: ProductSearchInput! = {}): [Product]!
 
   """
   Get all featured products to be listed
   """
-  getFeaturedProducts(limit: Int): [Product]
+  getFeaturedProducts(limit: Int): [Product]!
 
   """
   Get products based on a single category
   """
-  getProductsByCategory(category: ProductCategory!, limit: Int): [Product]
+  getProductsByCategory(category: ProductCategory!, limit: Int): [Product]!
 
   """
   Get all available variants of products to shop for. Optionally provide some search filters
   """
-  searchVariants(searchInput: VariantSearchInput! = {}): [Variant]
+  searchProductVariants(searchInput: VariantSearchInput! = {}): [ProductVariant]!
 
   """
   Get a specific product by id. Useful for the product details page or checkout page
@@ -30,7 +30,7 @@ type Query {
   """
   Get a specific variant by id. Useful for the product details page or checkout page
   """
-  variant(id: ID!): Variant
+  productVariant(id: ID!): ProductVariant
 }
 
 """
@@ -85,22 +85,22 @@ type Product @key(fields: "id") {
   sku: String!
   description: String
   images: [String]
-  price: Float
+  price: Float!
   attributes: [Attribute]
-  variants: [Variant]
+  variants: [ProductVariant]
   featured: Boolean!
 }
 
 type Attribute {
   name: String!
-  values: [String]
+  values: [String]!
 }
 
 """
 A variant of a product which is a unique combination of attributes like size and color
 Variants are the entities that are added to carts and purchased
 """
-type Variant @key(fields: "id") {
+type ProductVariant @key(fields: "id") {
   id: ID!
   """
   Link back to the parent Product SKU

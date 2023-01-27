@@ -50,7 +50,7 @@ type Cart @key(fields: "owner { id }") {
   """
   Items saved in the cart session
   """
-  items: [Variant]
+  items: [ProductVariant]
   subtotal: Float! @requires(fields: "items { price }")
 }
 
@@ -58,7 +58,7 @@ type Order @key(fields: "id", resolvable: false) {
   id: ID!
 }
 
-type Variant @key(fields: "id", resolvable: false) {
+type ProductVariant @key(fields: "id", resolvable: false) {
   id: ID!
   price: Float! @external
 }
