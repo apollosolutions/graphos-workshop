@@ -7,7 +7,7 @@ const resolvers = {
   Order: {
     __resolveReference: (order, { dataSources }) => dataSources.ordersAPI.getOrder(order.id),
     buyer: root => ({ id: root.customerId }),
-    items: (root) => root.productId.map(productId => ({id: productId}))
+    items: root => root.variantIds.map(variantId => ({id: variantId}))
   }
 };
 

@@ -4,7 +4,7 @@ module.exports = {
     product(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getProduct({id});
     },
-    variant(_, { id }, { dataSources }) {
+    productVariant(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getVariant(id);
     },
     getFeaturedProducts(_, { limit = 10 }, { dataSources }) {
