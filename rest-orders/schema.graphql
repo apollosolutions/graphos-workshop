@@ -31,5 +31,5 @@ type Order @key(fields: "id") {
 }
 
 """
-@WORKSHOP: 2.1.2 Define Stub Types for User and Variant
+@WORKSHOP: 2.1.2 Define Stub Types for User and ProductVariant
 """
