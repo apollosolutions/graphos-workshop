@@ -26,7 +26,7 @@ const resolvers = {
       return root.featured === "1"
     }
   },
-  Variant: {
+  ProductVariant: {
     __resolveReference: async (reference, { dataSources }) => {
       const variant = await dataSources.productsAPI.getVariant(reference.id);
       return variant;
