@@ -16,7 +16,7 @@ type User @key(fields: "id") {
   lastName: String
   address: String
   phone: String
-  email: String
+  email: String!
 
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
@@ -46,7 +46,7 @@ type Cart @key(fields: "owner { id }") {
   """
   Owner of the cart session
   """
-  owner: User
+  owner: User!
   """
   Items saved in the cart session
   """
