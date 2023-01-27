@@ -3,6 +3,9 @@ const { Query } = require("./Query");
 const resolvers = {
   Query,
   User: {
+    __resolveReference: async (reference, { dataSources }) => {
+      return dataSources.customerDB.getCustomer(reference.id);
+    },
     id: (parent) => parent.customer_id,
     activeCart: (parent) => parent.active_cart,
     firstName: (parent) => parent.first_name,
