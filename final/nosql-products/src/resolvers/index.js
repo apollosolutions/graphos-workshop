@@ -4,16 +4,17 @@ const resolvers = {
   Query,
   Product: {
     price: (root) => root.regular_price,
-    description: (root) => root.regular_price,
+    description: (root) => root.description,
     attributes: (root) => {
+      console.log(root);
       return [
         {
           name: root.attribute_1_name,
-          values: root.attribute_1_values.split("|")
+          values: root.attribute_1_values
         },
         {
           name: root.attribute_2_name,
-          values: root.attribute_2_values.split("|")
+          values: root.attribute_2_values
         },
       ]
     },
