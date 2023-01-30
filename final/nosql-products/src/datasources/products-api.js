@@ -38,17 +38,26 @@ class ProductsAPI extends MongoDataSource {
 
     if (id) {
       params.id = id;
+      const products = await this.findByFields({
+        type: "variable",
+        id: id
+      });
+
+      return products && products[0] ? products[0] : null;
     }
 
     if (sku) {
       params.sku = sku;
+
+      const products = await this.findByFields({
+        type: "variable",
+        sku: sku
+      });
+
+      return products && products[0] ? products[0] : null;
     }
+    return null;
 
-    const products = await this.findByFields({
-      type: "variable"
-    });
-
-    return products && products[0] ? products[0] : null;
   }
 
   async getVariant(variantId) {
@@ -56,7 +65,7 @@ class ProductsAPI extends MongoDataSource {
       id: variantId,
       type: "variation"
     });
-
+    console.log("Variant:", variations[0]);
     return variations && variations[0] ? variations[0] : null;
   }
 
@@ -65,6 +74,8 @@ class ProductsAPI extends MongoDataSource {
       type: "variation",
       parent: parentSku
     });
+
+    console.log("Variation: ", variations[0]);
 
     return variations && variations[0] ? variations : null;
   }
