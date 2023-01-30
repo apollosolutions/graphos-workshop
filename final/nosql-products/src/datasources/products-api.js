@@ -65,7 +65,7 @@ class ProductsAPI extends MongoDataSource {
       id: variantId,
       type: "variation"
     });
-    console.log("Variant:", variations[0]);
+
     return variations && variations[0] ? variations[0] : null;
   }
 
@@ -74,8 +74,6 @@ class ProductsAPI extends MongoDataSource {
       type: "variation",
       parent: parentSku
     });
-
-    console.log("Variation: ", variations[0]);
 
     return variations && variations[0] ? variations : null;
   }
