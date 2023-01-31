@@ -3,25 +3,15 @@ import {Error} from './Error';
 
 import Spinner from '../components/Spinner';
 import {Heading, SimpleGrid, Stack, Text, VStack} from '@chakra-ui/react';
-import {gql, useQuery} from '@apollo/client';
+// CODE TO IMPORT gql and useQuery from @apollo/client GOES HERE!
 
-export const GET_FEATURED_PRODUCTS = gql`
-  query HomePageFeaturedProducts($limit: Int) {
-    getFeaturedProducts(limit: $limit) {
-      id
-      name
-      description
-      images
-    }
-  }
-`;
+
+
+// Create a GET_FEATURED_PRODUCTS query using gql here!
 
 export default function HomePage() {
-  const {error, loading, data} = useQuery(GET_FEATURED_PRODUCTS, {
-    variables: {limit: 10}
-  });
+  // PARSE error, loading, and data here! Hint: useQuery
 
-  if (error) return <Error error={error} />;
   return (
     <Stack direction="column" spacing="12">
       <VStack direction="column" spacing="2" py="10">

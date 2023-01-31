@@ -1,6 +1,6 @@
 import Button from './Button.js';
 import PropTypes from 'prop-types';
-import ReviewRating from './ReviewRating';
+import ReviewRating from './ReviewRating.js';
 import {
   Box,
   Flex,
