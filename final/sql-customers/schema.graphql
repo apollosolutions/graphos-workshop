@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external"])
+  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external", "@tag"])
 
 type Query {
   users: [User]
@@ -12,11 +12,11 @@ An user account in our system
 type User @key(fields: "id") {
   id: ID!
 
-  firstName: String
-  lastName: String
-  address: String
-  phone: String
-  email: String
+  firstName: String @tag(name: "private")
+  lastName: String @tag(name: "private")
+  address: String @tag(name: "private")
+  phone: String @tag(name: "private")
+  email: String! @tag(name: "private")
 
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
@@ -46,11 +46,11 @@ type Cart @key(fields: "owner { id }") {
   """
   Owner of the cart session
   """
-  owner: User
+  owner: User!
   """
   Items saved in the cart session
   """
-  items: [Variant]
+  items: [ProductVariant]
   subtotal: Float! @requires(fields: "items { price }")
 }
 
@@ -58,7 +58,7 @@ type Order @key(fields: "id", resolvable: false) {
   id: ID!
 }
 
-type Variant @key(fields: "id", resolvable: false) {
+type ProductVariant @key(fields: "id", resolvable: false) {
   id: ID!
   price: Float! @external
 }

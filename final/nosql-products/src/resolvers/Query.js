@@ -4,7 +4,7 @@ module.exports = {
     product(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getProduct({id});
     },
-    variant(_, { id }, { dataSources }) {
+    productVariant(_, { id }, { dataSources }) {
       return dataSources.productsAPI.getVariant(id);
     },
     getFeaturedProducts(_, { limit = 10 }, { dataSources }) {
@@ -18,7 +18,7 @@ module.exports = {
       const { titleContains, categories, limit, featured } = searchInput;
       return dataSources.productsAPI.searchProducts(titleContains, categories, limit, featured);
     },
-    searchVariants(_, { searchInput }, { dataSources }) {
+    searchProductVariants(_, { searchInput }, { dataSources }) {
       const { sizeStartsWith } = searchInput;
       return dataSources.productsAPI.searchVariants(sizeStartsWith);
     }
