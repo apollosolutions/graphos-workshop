@@ -1,6 +1,6 @@
 import Button from './Button.js';
 import PropTypes from 'prop-types';
-import ReviewRating from './ReviewRating';
+import ReviewRating from './ReviewRating.js';
 import {
   Box,
   Flex,
@@ -29,7 +29,7 @@ export default function ProductCard({
 
   return (
     <Box role="group" overflow="hidden" as={Link} to={`/product/${id}`}>
-      <Box borderRadius="lg" maxHeight="250px" width="100%" overflow="hidden">
+      <Box borderRadius="lg" maxHeight="100%" width="100%" overflow="hidden">
         <Image
           transition="0.3s all ease-in-out"
           opacity={'95%'}
