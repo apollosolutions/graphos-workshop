@@ -21,6 +21,9 @@ async function main() {
   const { url } = await startStandaloneServer(server, {
     // @WORKSHOP: 2.2.3 - Pass orders API through context
     context: async ({ req }) => ({
+      dataSources: {
+        orrdersAPI: new OrdersAPI()
+      }
     }),
     listen: { port },
   });
