@@ -12,23 +12,13 @@ import {gql, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 
 export const GET_PRODUCT_DETAILS = gql`
-  fragment ProductFragment on Product {
-    variants {
-      colorway
-      price
-      parent {
-        description
-      }
-    }
-  }
-
   query GetProductDetails($productId: ID!) {
     product(id: $productId) {
       id
       name
       description
+      price
       images
-      ...ProductFragment @defer
     }
   }
 `;
@@ -56,8 +46,8 @@ export default function Product() {
               src={images[0]}
               alt={name}
               objectFit="cover"
-              width="100%"
-              height="500px"
+              width="30%"
+              height="auto"
               borderRadius="12"
             />
             <Flex direction="column" justify="space-between">

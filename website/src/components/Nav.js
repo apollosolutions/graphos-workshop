@@ -1,5 +1,5 @@
 import KBTLogo from './logo.png';
-import {Box, Flex} from '@chakra-ui/react';
+import {Box, Button, Flex} from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
 
 export default function Nav() {
@@ -12,6 +12,9 @@ export default function Nav() {
     >
       <Box as={Link} to="/">
         <img src={KBTLogo} alt="BigCo Inc. logo" />
+      </Box>
+      <Box as={Link} to="/Orders">
+        <Button>Account</Button>
       </Box>
     </Flex>
   );
