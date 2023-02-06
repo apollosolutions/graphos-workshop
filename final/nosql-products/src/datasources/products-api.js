@@ -112,7 +112,8 @@ class ProductsAPI extends MongoDataSource {
       attribute_1_name: 1,
       attribute_2_name: 1,
       sku: 1,
-      description: 1
+      description: 1,
+      short_description: 1
     };
 
     const cursor = this.collection

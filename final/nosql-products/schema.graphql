@@ -89,6 +89,7 @@ type Product @key(fields: "id") {
   attributes: [Attribute]
   variants: [ProductVariant]
   featured: Boolean!
+  shortDescription: String
 }
 
 type Attribute {

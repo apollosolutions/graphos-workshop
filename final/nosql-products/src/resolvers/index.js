@@ -24,7 +24,8 @@ const resolvers = {
     },
     featured: (root) => {
       return root.featured === "1"
-    }
+    },
+    shortDescription: (root) => root.short_description
   },
   ProductVariant: {
     __resolveReference: async (reference, { dataSources }) => {
