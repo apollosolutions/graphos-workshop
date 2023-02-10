@@ -3,6 +3,15 @@ const { Query } = require("./Query");
 const resolvers = {
   Query,
   Product: {
+    __resolveReference: async (reference, { dataSources }) => {
+      if (reference.id) {
+        return await dataSources.productsAPI.getProduct({ id: reference.id });
+      }
+
+      if (reference.sku) {
+        return await dataSources.productsAPI.getProduct({ sku: reference.sku });
+      }
+    },
     price: (root) => root.regular_price,
     description: (root) => root.description,
     attributes: (root) => {
@@ -18,6 +27,7 @@ const resolvers = {
       ]
     },
     variants: async (root, __, { dataSources }) => {
+      console.log(root);
       const variants = await dataSources.productsAPI.getProductVariants(root.sku);
       // Attach the root to the variant
       return variants.map(variant => ({ ...variant, root }));
