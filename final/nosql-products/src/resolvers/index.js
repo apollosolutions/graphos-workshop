@@ -3,6 +3,15 @@ const { Query } = require("./Query");
 const resolvers = {
   Query,
   Product: {
+    __resolveReference: async (reference, { dataSources }) => {
+      if (reference.id) {
+        return await dataSources.productsAPI.getProduct({id: reference.id});
+      }
+      
+      if (reference.sku) {
+        return await dataSources.productsAPI.getProduct({sku: reference.sku});
+      }
+    },
     price: (root) => root.regular_price,
     description: (root) => root.description,
     attributes: (root) => {
