@@ -1,3 +1,5 @@
+import './App.css';
+
 import Layout from './layout/Layout';
 import {Fallback, HomePage, Orders, Product} from './pages';
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';

@@ -1,0 +1,19 @@
+.Button {
+    padding: 20px;
+}
+
+.product__thumbnail {
+    height: auto;
+    width: 6%;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.product__image {
+    width: 80%;
+    height: auto;
+}
+
+.product__thumbnail--active {
+    border: 1px solid black;
+}
