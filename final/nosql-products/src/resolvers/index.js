@@ -5,11 +5,19 @@ const resolvers = {
   Product: {
     __resolveReference: async (reference, { dataSources }) => {
       if (reference.id) {
+<<<<<<< HEAD
         return await dataSources.productsAPI.getProduct({ id: reference.id });
       }
 
       if (reference.sku) {
         return await dataSources.productsAPI.getProduct({ sku: reference.sku });
+=======
+        return await dataSources.productsAPI.getProduct({id: reference.id});
+      }
+      
+      if (reference.sku) {
+        return await dataSources.productsAPI.getProduct({sku: reference.sku});
+>>>>>>> 4083aa0fd7607ac5bd4d78ebdb6eadf163e70cba
       }
     },
     price: (root) => root.regular_price,
