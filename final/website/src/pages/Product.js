@@ -49,6 +49,8 @@ export default function Product() {
   const [currentImage, setImage] = useState("");
   const [selectedColor, setColor] = useState("");
   const [selectedSize, setSize] = useState("");
+  const [cartLoading, setCartLoading] = useState(false);
+
   const [sizeOptions, setSizeOptions] = useState([]);
   const [inStockSizes, setInStockSizes] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
@@ -114,7 +116,6 @@ export default function Product() {
             { 
               images?.map(imageUri => {
                 const activeImage = (imageUri === currentImage);
-
                 return (
                   <Image 
                     key={imageUri}
@@ -142,7 +143,7 @@ export default function Product() {
               <Divider mt={4} mb={4} />
             </Flex>
 
-            <p><b>Color:</b> {selectedColor}</p>
+            <Text><b>Color:</b> {selectedColor}</Text>
                 <Stack direction="row">
                   <ul>
                     {
@@ -161,8 +162,7 @@ export default function Product() {
                 </Stack>
             
 
-            <p><b>Size:</b> {selectedSize.toUpperCase()}</p>
-
+            <Text><b>Size:</b> {selectedSize.toUpperCase()}</Text>
             {
               data.product?.variants ? 
               (
@@ -188,15 +188,14 @@ export default function Product() {
             }
 
             <Flex direction="row">
-            <Stack flex="1" direction="column" spacing="12">
+            <Stack flex="1" direction="column">
+              <Text as="b">Quantity:</Text>
               <Stack
                 direction="column"
                 spacing="4"
                 divider={<StackDivider borderColor="gray.200" />}
               >
-                <p>
-                  <b>Quantity:</b>
-                  <Select variant='outline' mt={4} placeholder='1'>
+                  <Select variant='outline' placeholder='1'>
                     <option value='2'>2</option>
                     <option value='3'>3</option>
                     <option value='4'>4</option>
@@ -207,16 +206,21 @@ export default function Product() {
                     <option value='9'>9</option>
                     <option value='10'>9</option>
                   </Select>
-                </p>
                 <Button
+                  isLoading={(cartLoading === true) ? true : false}
                   onClick={() => {
-                    toast({
-                      title: 'Added to Cart',
-                      description: `${data.product.name} - ${selectedColor} - ${selectedSize}`,
-                      status: 'success',
-                      duration: 4500,
-                      isClosable: true,
-                    })
+                    setCartLoading(true);
+                    setTimeout(() => {
+                      toast({
+                        title: 'Added to Cart',
+                        description: `${data.product.name} - ${selectedColor} - ${selectedSize}`,
+                        status: 'success',
+                        duration: 4500,
+                        isClosable: true,
+                      })
+                      setCartLoading(false);
+                    }, 800)
+
                   }}
                   colorScheme='blue'
                   leftIcon={<FaShoppingCart />}>

@@ -5,19 +5,11 @@ const resolvers = {
   Product: {
     __resolveReference: async (reference, { dataSources }) => {
       if (reference.id) {
-<<<<<<< HEAD
         return await dataSources.productsAPI.getProduct({ id: reference.id });
       }
 
       if (reference.sku) {
         return await dataSources.productsAPI.getProduct({ sku: reference.sku });
-=======
-        return await dataSources.productsAPI.getProduct({id: reference.id});
-      }
-      
-      if (reference.sku) {
-        return await dataSources.productsAPI.getProduct({sku: reference.sku});
->>>>>>> 4083aa0fd7607ac5bd4d78ebdb6eadf163e70cba
       }
     },
     price: (root) => root.regular_price,
@@ -35,7 +27,6 @@ const resolvers = {
       ]
     },
     variants: async (root, __, { dataSources }) => {
-      console.log(root);
       const variants = await dataSources.productsAPI.getProductVariants(root.sku);
       // Attach the root to the variant
       return variants.map(variant => ({ ...variant, root }));
@@ -56,7 +47,7 @@ const resolvers = {
     parent: async (root, __, { dataSources }) => {
       return await dataSources.productsAPI.getProduct({sku: root.parent });
     },
-    inStock: (root) => (root.inStock === "1")
+    inStock: (root) => (root.in_stock === "1")
   }
 };
 
