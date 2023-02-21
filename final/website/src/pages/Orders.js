@@ -46,6 +46,7 @@ export default function Orders() {
 
   // prettier-ignore
   const {firstName, lastName, email, address, activeCart, orders} = data.user || {};
+  
   console.log(orders);
   return (
     <>

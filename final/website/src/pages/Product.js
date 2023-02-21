@@ -81,16 +81,21 @@ export default function Product() {
     setVariantOptions(data.product, selectedColor);
   }, [selectedColor]);
 
-  const initializePage = (data) => {
-    setImage(data.product.images[0]);
-    setColor(data.product.variants[0].colorway);
-    setSize(data.product.variants[0].size);
+  const updatePage = (data) => {
+    if (!currentImage) {
+      setImage(data.product.images[0]);
+    }
+
+    if (data.product.variants) {
+      setColor(data.product.variants[0].colorway);
+      setSize(data.product.variants[0].size);
+    }
   }
 
   const response = useQuery(GET_PRODUCT_DETAILS, {
     variables: {productId: id},
     onCompleted: (data) => {
-      initializePage(data);
+      updatePage(data);
     }
   });
 
@@ -146,7 +151,7 @@ export default function Product() {
             <Text><b>Color:</b> {selectedColor}</Text>
                 <Stack direction="row">
                   <ul>
-                    {
+                    {(colorOptions.length > 1) ? 
                       colorOptions.map(color => (
                         <Tag 
                           className='product__variant_tag'
@@ -156,7 +161,8 @@ export default function Product() {
                           { color === selectedColor ? <TagLeftIcon boxSize='12px' as={FaCheck} /> : null }
                           <TagLabel>{color}</TagLabel>
                         </Tag>
-                     ))
+                     )) :
+                     <Text>...</Text>
                     }
                   </ul>
                 </Stack>
@@ -169,17 +175,19 @@ export default function Product() {
                 <Stack direction="row">
                   <ul>
                     {
-                      sizeOptions.map(size => (
-                          <Tag
-                            className={
-                              (inStockSizes.indexOf(size) > -1) ? 'product__variant_tag' : 'product__variant_tag--out'
-                            }
-                            onClick={() => setSize(size)} 
-                            variant={size === selectedSize ? 'solid' : 'outline'}
-                            ml={2}>
-                              {size.toUpperCase()}
-                          </Tag>
-                      ))
+                      (sizeOptions.length > 1) ?
+                        sizeOptions.map(size => (
+                            <Tag
+                              className={
+                                (inStockSizes.indexOf(size) > -1) ? 'product__variant_tag' : 'product__variant_tag--out'
+                              }
+                              onClick={() => setSize(size)} 
+                              variant={size === selectedSize ? 'solid' : 'outline'}
+                              ml={2}>
+                                {size.toUpperCase()}
+                            </Tag>
+                        )) :
+                        <Text>...</Text>
                     }
                   </ul>
                 </Stack>
