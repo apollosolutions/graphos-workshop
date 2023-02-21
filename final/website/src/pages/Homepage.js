@@ -13,6 +13,7 @@ export const GET_FEATURED_PRODUCTS = gql`
       price
       description
       images
+      shortDescription
     }
   }
 `;

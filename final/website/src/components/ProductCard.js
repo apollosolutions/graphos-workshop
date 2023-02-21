@@ -1,6 +1,5 @@
 import Button from './Button.js';
 import PropTypes from 'prop-types';
-import ReviewRating from './ReviewRating.js';
 import {
   Box,
   Flex,
@@ -11,10 +10,13 @@ import {
 } from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
 
+import ReviewRating from './ReviewRating.js';
+import {htmlDecode} from '../helpers';
+
 export default function ProductCard({
   id,
   name,
-  description,
+  shortDescription,
   images,
   overallRating = 5
 }) {
@@ -42,11 +44,13 @@ export default function ProductCard({
       </Box>
       <Flex direction="column" p="3" justify="space-between" minH="120px">
         <Heading as="h2" size="md" my="4">
-          {name}
+          {htmlDecode(name)}
         </Heading>
         {
           <Flex direction="column" minH="100px" justify="space-between">
-            <Text as="i" noOfLines={2}>{`"${description}"`}</Text>
+            <Text as="i" noOfLines={2}>{`
+              ${htmlDecode(shortDescription)}
+            `}</Text>
             <Flex direction="row" py="4" justify="space-between">
               <ReviewRating isHalf rating={overallRating} size={20} />
               <Button>See More</Button>
@@ -61,7 +65,7 @@ export default function ProductCard({
 ProductCard.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  description: PropTypes.string,
+  shortDescription: PropTypes.string,
   images: PropTypes.array,
   overallRating: PropTypes.number
 };
