@@ -11,11 +11,10 @@ const CustomerDB = require("./datasources/customer-db");
 const port = process.env.PORT ?? 4003;
 const subgraphName = require("../package.json").name;
 
-console.log(process.env)
 const knexConfig = {
   client: 'mysql2',
   connection: {
-    host: process.env.DB_HOST,
+    host: '34.75.163.58',
     port: 3306,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
