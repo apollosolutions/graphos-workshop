@@ -11,38 +11,12 @@ import {
 import {gql, useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 
-export const GET_PRODUCT_DETAILS = gql`
-  fragment ProductFragment on Product {
-    variants {
-      colorway
-      price
-      parent {
-        description
-      }
-    }
-  }
-
-  query GetProductDetails($productId: ID!) {
-    product(id: $productId) {
-      id
-      name
-      description
-      images
-      ...ProductFragment @defer
-    }
-  }
-`;
+//Create a GET_PRODUCT_DETAILS query here! 
 
 export default function Product() {
   const {id} = useParams();
 
-  const response = useQuery(GET_PRODUCT_DETAILS, {
-    variables: {productId: id}
-  });
-  const {loading, error, data = {}} = response;
-  if (loading) return <Spinner />;
-  if (error) return <Error error={error.message} />;
-  const {name, description, images} = data?.product || {};
+  // PARSE error, loading, and data here! Hint: useQuery
 
   return (
     <>
@@ -56,8 +30,8 @@ export default function Product() {
               src={images[0]}
               alt={name}
               objectFit="cover"
-              width="100%"
-              height="500px"
+              width="30%"
+              height="auto"
               borderRadius="12"
             />
             <Flex direction="column" justify="space-between">

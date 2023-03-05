@@ -3,6 +3,15 @@ const { Query } = require("./Query");
 const resolvers = {
   Query,
   Product: {
+    __resolveReference: async (reference, { dataSources }) => {
+      if (reference.id) {
+        return await dataSources.productsAPI.getProduct({ id: reference.id });
+      }
+
+      if (reference.sku) {
+        return await dataSources.productsAPI.getProduct({ sku: reference.sku });
+      }
+    },
     price: (root) => root.regular_price,
     description: (root) => root.description,
     attributes: (root) => {
@@ -24,7 +33,8 @@ const resolvers = {
     },
     featured: (root) => {
       return root.featured === "1"
-    }
+    },
+    shortDescription: (root) => root.short_description
   },
   ProductVariant: {
     __resolveReference: async (reference, { dataSources }) => {
@@ -37,7 +47,7 @@ const resolvers = {
     parent: async (root, __, { dataSources }) => {
       return await dataSources.productsAPI.getProduct({sku: root.parent });
     },
-    inStock: (root) => (root.inStock === "1")
+    inStock: (root) => (root.in_stock === "1")
   }
 };
 

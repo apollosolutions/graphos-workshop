@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const gql = require("graphql-tag");
 const { readFileSync } = require("fs");
 const { ApolloServer } = require("@apollo/server");
@@ -14,8 +16,8 @@ const knexConfig = {
   connection: {
     host: '34.75.163.58',
     port: 3306,
-    user: 'apollo-user',
-    password: 'enterpriseworkshop1',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: 'customer'
   }
 }

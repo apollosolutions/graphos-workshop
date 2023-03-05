@@ -1,5 +1,5 @@
 import Layout from './layout/Layout';
-import {Fallback, HomePage, Product} from './pages';
+import {Fallback, HomePage, Orders, Product} from './pages';
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
 export default function App() {
@@ -12,6 +12,9 @@ export default function App() {
           </Route>
           <Route path="/product/:id">
             <Product />
+          </Route>
+          <Route path="/Orders">
+            <Orders />
           </Route>
           <Route>
             <Fallback />

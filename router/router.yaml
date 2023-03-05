@@ -11,6 +11,10 @@ homepage:
 cors:
   allow_any_origin: true
 
+# This would make debugging easier, but should be a per subgraph basis for production
+include_subgraph_errors:
+  all: true # Propagate errors from all subgraphs
+
 # This is a top-level key. It MUST define at least one of the two
 # sub-keys shown, even if you don't modify its default value.
 # rhai:

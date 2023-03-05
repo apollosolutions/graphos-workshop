@@ -6,26 +6,32 @@ const resolvers = {
     __resolveReference: async (reference, { dataSources }) => {
       return dataSources.customerDB.getCustomer(reference.id);
     },
-    id: (parent) => parent.customer_id,
-    activeCart: (parent) => parent.active_cart,
-    firstName: (parent) => parent.first_name,
-    lastName: (parent) => parent.last_name,
-    orders: (parent) => {
-      if (parent.orders) {
-        const orders = parent.orders.split(",");
-        return orders.map(orderId => ({ id: orderId }))
+    id: (root) => root.customer_id,
+    activeCart: (root) => {
+      const cart = {
+        owner: root
+      }
+
+      if (root.active_cart) {
+        cart.items = root.active_cart.split(",").map(id => ({id}))
+      }
+
+      return cart;
+    },
+    firstName: (root) => root.first_name,
+    lastName: (root) => root.last_name,
+    orders: (root) => {
+      if (root.orders) {
+        const orders = root.orders.split(",");
+        return orders.map(orderId => ({ id: orderId }));
       }
       return [];
     }
   },
   Cart: {
-    items: (ids) => {
-      const variants = ids.split(',');
-      return variants.map(id => ({id}));
-    },
-    subtotal: (parent) => {
-      if (parent.items && parent.items.length > 0) {
-        const orders = parent.items;
+    subtotal: (root) => {
+      if (root.items && root.items.length > 0) {
+        const orders = root.items;
         return orders.reduce(
           (accumulator, currentItem) => accumulator + currentItem.price,
           0

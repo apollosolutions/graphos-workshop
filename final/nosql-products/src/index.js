@@ -5,6 +5,7 @@ const { readFileSync } = require("fs");
 const { ApolloServer } = require("@apollo/server");
 const { buildSubgraphSchema } = require("@apollo/subgraph");
 const { startStandaloneServer } = require("@apollo/server/standalone");
+const { ApolloServerPluginInlineTrace } = require("@apollo/server/plugin/inlineTrace");
 
 const resolvers = require("./resolvers");
 const ProductsAPI = require("./datasources/products-api");
@@ -37,9 +38,12 @@ async function main() {
       encoding: "utf-8",
     })
   );
+
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
+    instrospection: true
   });
+
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => new ContextValue({ req, server }),
     listen: {
