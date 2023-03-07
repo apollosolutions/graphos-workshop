@@ -1,42 +1,27 @@
 import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+// ----- Import Apollo Client Here ----
 import {
   ApolloClient,
-  ApolloLink,
   ApolloProvider,
-  HttpLink,
-  InMemoryCache,
-  concat
+  InMemoryCache
 } from '@apollo/client';
+// ------------------------------------
+
 
 import theme from './theme.js';
 import {ChakraProvider} from '@chakra-ui/react';
 
-const httpLink = new HttpLink({
-  uri: 'https://router-j3nprurqka-ue.a.run.app/'
-});
 
-const delayMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext(({headers = {}}) => {
-    const delay = localStorage.getItem('apollo-x-custom-delay') ?? 1000;
-    return {
-      headers: {
-        ...headers,
-        'x-custom-delay': delay
-      }
-    };
-  });
-
-  return forward(operation);
-});
-
+// ----- Configure the apollo client here ------
 const client = new ApolloClient({
-  link: concat(delayMiddleware, httpLink),
+  uri: 'https://router-j3nprurqka-ue.a.run.app/',
   cache: new InMemoryCache(),
-  name: 'web',
+  name: 'web-workshop-client',
   version: '0.1'
 });
+// ---------------------------------------------
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
