@@ -26,3 +26,14 @@
     cursor: not-allowed;
     opacity: 0.2;
 }
+
+.stat__card {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.chakra-stat__label {
+    font-weight: bold !important;
+    font-size: 15px !important;
+}
