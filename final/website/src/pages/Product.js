@@ -65,6 +65,10 @@ export default function Product() {
 
       setColorOptions(colorOptions);
     
+      // For Sorting
+      const sizeOrder = ["xs", "s", "m", "l", "xl", "xxl"];
+      const sortBySize = (a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+
       const allSizes = product.variants
         .filter(variant => variant.colorway === selectedColor)
 
@@ -72,7 +76,7 @@ export default function Product() {
         .filter(variant => (variant.inStock))
         .map(variant => variant.size);
 
-      setSizeOptions(allSizes.map(variant => variant.size));
+      setSizeOptions(allSizes.map(variant => variant.size).sort(sortBySize));
       setInStockSizes(inStockSizeOfColor)
     }
   }
@@ -154,6 +158,7 @@ export default function Product() {
                     {(colorOptions.length > 1) ? 
                       colorOptions.map(color => (
                         <Tag 
+                          key={"tag-" + color}
                           className='product__variant_tag'
                           onClick={() => setColor(color)}
                           variant='subtle'
@@ -178,6 +183,7 @@ export default function Product() {
                       (sizeOptions.length > 1) ?
                         sizeOptions.map(size => (
                             <Tag
+                              key={"tag-" + size}
                               className={
                                 (inStockSizes.indexOf(size) > -1) ? 'product__variant_tag' : 'product__variant_tag--out'
                               }
@@ -192,7 +198,7 @@ export default function Product() {
                   </ul>
                 </Stack>
               ) : 
-              <p className="product__loading">...</p>
+              <Text as="p" className="product__loading">...</Text>
             }
 
             <Flex direction="row">

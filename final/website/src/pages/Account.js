@@ -16,8 +16,10 @@ export const GET_USER_ORDERS = gql`
         items {
           id
           colorway
+          size
           price
           parent {
+            id
             name
             images
           }
@@ -28,6 +30,8 @@ export const GET_USER_ORDERS = gql`
         id
         items {
           id
+          size
+          colorway
           price
           parent {
             id
@@ -42,7 +46,7 @@ export const GET_USER_ORDERS = gql`
 
 export default function Orders() {
   const response = useQuery(GET_USER_ORDERS, {
-    variables: {userId: '11'}
+    variables: {userId: '10'}
   });
   const {loading, error, data = {}} = response;
   if (loading) return <Spinner />;
@@ -113,7 +117,7 @@ export default function Orders() {
                   </SimpleGrid>
                 </StackItem>
 
-                {/* Active Cart */}
+                {/* Orders */}
                 <StackItem>
                   <Heading as="h3" size="md">
                     Recent Orders
@@ -138,19 +142,21 @@ export default function Orders() {
                       </Stack>
                     </Flex>
 
-
                     <Divider mb={5} pb={5} />
+
                     {lastOrder.items.map(item => (
-                      <Flex spacing={10} mb={5}>
+                      <Flex key={"order-" + item.id} spacing={10} mb={5}>
                         <Image src={item.parent.images[1]} boxSize='100px' objectFit='cover' />
                         <Spacer />
                         <Link as={ReactLink} size="xl" to={`/product/${item.parent.id}`}>
                           {item.parent.name}
+                          <Text as="i">- {item.colorway} - {item.size}</Text>
                         </Link>
                         <Spacer />
                         <Text>${item.price}</Text>
                       </Flex>
                     ))}
+
                   </Box>
                 </StackItem>
                 <StackItem>
@@ -174,11 +180,12 @@ export default function Orders() {
                     <Divider mb={5} pb={5} />
                     
                     {activeCart.items.map(item => (
-                      <Flex spacing={10} mb={5}>
+                      <Flex key={"cart-" + item.id} spacing={10} mb={5}>
                         <Image src={item.parent.images[1]} boxSize='100px' objectFit='cover' />
                         <Spacer />
                         <Link as={ReactLink} size="xl" to={`/product/${item.parent.id}`}>
                           {item.parent.name}
+                          <Text as="i">- {item.colorway} - {item.size}</Text>
                         </Link>
                         <Spacer />
                         <Text>${item.price}</Text>
