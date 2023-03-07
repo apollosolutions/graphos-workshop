@@ -55,8 +55,6 @@ export default function Product() {
   const [inStockSizes, setInStockSizes] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
 
-  const {id} = useParams();
-
   const setVariantOptions = (product) => {
     if (product) {
       const colorOptions = product.variants
@@ -96,6 +94,9 @@ export default function Product() {
     }
   }
 
+  // --------- Code Here for Workshop ----------------------
+  const {id} = useParams();
+
   const response = useQuery(GET_PRODUCT_DETAILS, {
     variables: {productId: id},
     onCompleted: (data) => {
@@ -108,7 +109,8 @@ export default function Product() {
   if (loading) return <Spinner />;
   if (error) return <Error error={error.message} />;
   const {name, description, images} = data?.product || {};
-
+  // ------------------------------------------------------
+  
   return (
     <>
       {data && (

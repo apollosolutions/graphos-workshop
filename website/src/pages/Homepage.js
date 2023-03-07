@@ -3,14 +3,23 @@ import {Error} from './Error';
 
 import Spinner from '../components/Spinner';
 import {Heading, SimpleGrid, Stack, Text, VStack} from '@chakra-ui/react';
-// CODE TO IMPORT gql and useQuery from @apollo/client GOES HERE!
+// --- CODE TO IMPORT ---------------------------------
+// gql and useQuery from @apollo/client GOES HERE!
+
+// ----------------------------------------------------
 
 
+// --- Create a GET_FEATURED_PRODUCTS query -----------
 
-// Create a GET_FEATURED_PRODUCTS query using gql here!
+
+// ----------------------------------------------------
+
 
 export default function HomePage() {
-  // PARSE error, loading, and data here! Hint: useQuery
+  // --- PARSE error, loading, and data here! Hint: useQuery ------
+
+
+  // --------------------------------------------------------------
 
   return (
     <Stack direction="column" spacing="12">

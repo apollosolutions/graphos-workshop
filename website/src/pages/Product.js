@@ -20,28 +20,13 @@ import {
 import {gql, useQuery} from '@apollo/client';
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-
 import {htmlDecode, htmlParser} from '../helpers';
 
-export const GET_PRODUCT_DETAILS = gql`
-  query GetProductDetails($productId: ID!) {
-    product(id: $productId) {
-      id
-      name
-      description
-      price
-      images
-      ... @defer {
-        variants {
-          colorway
-          size
-          inStock
-          id
-        }
-      }
-    }
-  }
-`;
+
+//-- Create a GET_PRODUCT_DETAILS query here! --
+
+
+// ---------------------------------------------
 
 export default function Product() {
   const toast = useToast()
@@ -54,8 +39,6 @@ export default function Product() {
   const [sizeOptions, setSizeOptions] = useState([]);
   const [inStockSizes, setInStockSizes] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
-
-  const {id} = useParams();
 
   const setVariantOptions = (product) => {
     if (product) {
@@ -96,18 +79,17 @@ export default function Product() {
     }
   }
 
-  const response = useQuery(GET_PRODUCT_DETAILS, {
-    variables: {productId: id},
-    onCompleted: (data) => {
-      updatePage(data);
-    }
-  });
+  // --------------------------------------------------------------------
+  // Enter useParams, useQuery, and parsing + error + loading code here 
 
 
-  const {loading, error, data = {}} = response;
-  if (loading) return <Spinner />;
-  if (error) return <Error error={error.message} />;
-  const {name, description, images} = data?.product || {};
+
+
+
+
+
+
+  // --------------------------------------------------------------------
 
   return (
     <>

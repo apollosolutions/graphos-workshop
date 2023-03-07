@@ -5,8 +5,9 @@ import {Heading, Button, Icon, Image, SimpleGrid, Stack, Text, Divider, Stat, St
 import {gql, useQuery} from '@apollo/client';
 import { Link as ReactLink } from 'react-router-dom';
 
-export const GET_USER_ORDERS = gql`
-  query Orders($userId: ID!) {
+// ----------  Account Summary Query Here -------------
+export const GET_ACCOUNT_SUMMARY = gql`
+  query getAccountSummary($userId: ID!) {
     user(id: $userId) {
       firstName
       lastName
@@ -43,18 +44,21 @@ export const GET_USER_ORDERS = gql`
     }
   }
 `;
+// -----------------------------------
 
 export default function Orders() {
-  const response = useQuery(GET_USER_ORDERS, {
+  // -------------- Use Query Code Here --------------
+  // useQuery, loading, error handling, and data parsing 
+  const response = useQuery(GET_ACCOUNT_SUMMARY, {
     variables: {userId: '10'}
   });
   const {loading, error, data = {}} = response;
   if (loading) return <Spinner />;
   if (error) return <Error error={error.message} />;
 
-  // prettier-ignore
   const {firstName, lastName, email, address, activeCart, orders} = data.user || {};
-
+  
+  // -----------------------------------
   const lastOrder = orders[orders.length - 1];
   return (
     <>
