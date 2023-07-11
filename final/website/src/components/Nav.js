@@ -1,5 +1,5 @@
 import KBTLogo from './logo.png';
-import {Box, Button, Flex} from '@chakra-ui/react';
+import {Box, Button, Flex, HStack} from '@chakra-ui/react';
 import {Link} from 'react-router-dom';
 
 export default function Nav() {
@@ -13,9 +13,15 @@ export default function Nav() {
       <Box as={Link} to="/">
         <img src={KBTLogo} alt="KBT Inc. logo" />
       </Box>
+      <HStack>
       <Box as={Link} to="/account">
         <Button>Account</Button>
       </Box>
+      <Box as={Link} to="/connection">
+        <Button variant='outline'>Configure</Button>
+      </Box>
+      </HStack>
+
     </Flex>
   );
 }

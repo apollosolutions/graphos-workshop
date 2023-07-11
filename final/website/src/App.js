@@ -1,7 +1,7 @@
 import './App.css';
 
 import Layout from './layout/Layout';
-import {Fallback, HomePage, Account, Product} from './pages';
+import {Fallback, HomePage, Account, Product, Connection} from './pages';
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
 export default function App() {
@@ -17,6 +17,9 @@ export default function App() {
           </Route>
           <Route path="/account">
             <Account />
+          </Route>
+          <Route path="/connection">
+            <Connection />
           </Route>
           <Route>
             <Fallback />

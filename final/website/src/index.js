@@ -5,19 +5,26 @@ import ReactDOM from 'react-dom';
 import {
   ApolloClient,
   ApolloProvider,
-  InMemoryCache
+  InMemoryCache,
+  HttpLink
 } from '@apollo/client';
 // ------------------------------------
 
 
 import theme from './theme.js';
 import {ChakraProvider} from '@chakra-ui/react';
+import { DEFAULT_ROUTER_URL } from './config';
 
+const routerUrl = localStorage.getItem('router-url') || DEFAULT_ROUTER_URL;
+
+const link = new HttpLink({
+  uri: 'https://' + routerUrl
+});
 
 // ----- Configure the apollo client here ------
 const client = new ApolloClient({
-  uri: 'https://router-j3nprurqka-ue.a.run.app/',
   cache: new InMemoryCache(),
+  link,
   name: 'web-workshop-client',
   version: '0.1'
 });
