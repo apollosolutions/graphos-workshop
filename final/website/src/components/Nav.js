@@ -17,7 +17,7 @@ export default function Nav() {
       <Box as={Link} to="/account">
         <Button>Account</Button>
       </Box>
-      <Box as={Link} to="/connection">
+      <Box as={Link} to="/config">
         <Button variant='outline'>Configure</Button>
       </Box>
       </HStack>

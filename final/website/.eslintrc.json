@@ -5,7 +5,10 @@
     ],
     "rules": {
       "react/react-in-jsx-scope": "off",
-      "no-multi-spaces": ["error"]
+      "no-multi-spaces": ["error"],
+      "options": {
+        "emitError": true
+      }
     },
     "overrides": [
       {

@@ -40,7 +40,7 @@ export const Connection = () => {
                 <Stat size="sm" className="stat__card">
                     <Heading as="h3" size="md">Router URL</Heading>
                     <Text fontWeight="regular" mb={5}>
-                        Set the URL of your deployed router for Apollo Client to forward GraphQL operations to                  </Text>
+                        Set the URL of your deployed router for Apollo Client to forward GraphQL operations to. Note, this only applies to your browser.               </Text>
                     <Heading size="xl"></Heading>
                     <InputGroup size='sm'>
                         <InputLeftAddon children='https://' />

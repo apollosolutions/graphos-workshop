@@ -1,0 +1,14 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+# Pass the final project directory to copy over to the docker image
+  args: ['build', '-t', 'gcr.io/federation-workshop/front-end', './final/website']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/federation-workshop/front-end']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'front-end', '--image', 'gcr.io/federation-workshop/front-end','--allow-unauthenticated', '--region', 'us-east1']
+images:
+- gcr.io/federation-workshop/front-end
