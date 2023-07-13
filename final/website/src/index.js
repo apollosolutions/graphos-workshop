@@ -5,8 +5,7 @@ import ReactDOM from 'react-dom';
 import {
   ApolloClient,
   ApolloProvider,
-  InMemoryCache,
-  HttpLink
+  InMemoryCache
 } from '@apollo/client';
 // ------------------------------------
 
@@ -17,14 +16,10 @@ import { DEFAULT_ROUTER_URL } from './config';
 
 const routerUrl = localStorage.getItem('router-url') || DEFAULT_ROUTER_URL;
 
-const link = new HttpLink({
-  uri: 'https://' + routerUrl
-});
-
 // ----- Configure the apollo client here ------
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link,
+  uri: 'https://' + routerUrl,
   name: 'web-workshop-client',
   version: '0.1'
 });
