@@ -15,6 +15,10 @@ deploy-router:
 	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
 	--config ./router/cloudbuild.yaml
 
+deploy-website:
+	echo "Deploying Front-End Website" && \
+	gcloud builds submit --config ./final/website/cloudbuild.yaml
+
 deploy-contract:
         echo "Running Google Cloud Build" && \
         gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
@@ -38,6 +42,10 @@ publish-customers:
 	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./final/sql-customers/schema.graphql \
   	--name customers --routing-url https://subgraph-customers-j3nprurqka-ue.a.run.app
+
+check:
+	APOLLO_KEY=$(APOLLO_KEY) \
+	rover subgraph check  --name orders $(APOLLO_GRAPH_REF) --schema ./rest-orders/schema.graphql
 
 delete-users:
 	APOLLO_KEY=$(APOLLO_KEY) \

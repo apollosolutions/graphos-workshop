@@ -12,6 +12,10 @@ const resolvers = {
         return await dataSources.productsAPI.getProduct({ sku: reference.sku });
       }
     },
+    images: ({images}) => {
+      // Temporary fix for now, will look into hosting the images ourselves
+      return images.map(image => `https://wsrv.nl/?url=${image}`);
+    },
     price: (root) => root.regular_price,
     description: (root) => root.description,
     attributes: (root) => {
