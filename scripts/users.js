@@ -26,6 +26,8 @@ const setDemoClaims = async (uid) => {
 
     if (JSON.stringify(record.customClaims) === JSON.stringify(baseClaims)) {
         console.log(`successfully set claim for user ${record.email}`);
+    } else {
+        console.log(`claims did not persist to user (${record.email}), these were the claims ${record.customClaims}`);
     }
 };
 
