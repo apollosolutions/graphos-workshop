@@ -1,19 +1,6 @@
 const { initializeApp } = require('firebase/app');
 const { signInWithEmailAndPassword, getAuth } = require('firebase/auth');
 
-const userIds = {
-    'noPermissions': 'kROegJbVGmYlOq3JZK0cqEjvGYB2', // no@apolloworkshop.com
-    'allPermissions': 'ZfkDAHi4JDVGyI4DB5K4HzhrSMm2' // yes@apolloworkshop.com
-};
-
-// // For printing later
-// const stdOut = {
-//     tokens: {
-//         all: '',
-//         no: '',
-//     }
-// };
-
 const firebaseConfig = {
     apiKey: "AIzaSyBGEWuarfRs4vVIzbdPj7EU_h3tMAVO_e4",
     authDomain: "federation-workshop.firebaseapp.com",
