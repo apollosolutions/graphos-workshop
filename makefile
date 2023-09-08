@@ -50,3 +50,6 @@ check:
 delete-users:
 	APOLLO_KEY=$(APOLLO_KEY) \
 	rover subgraph delete --name orders $(APOLLO_GRAPH_REF)
+
+test-router-local:
+	APOLLO_KEY=$(APOLLO_KEY) APOLLO_GRAPH_REF=$(APOLLO_GRAPH_REF) ./router/router --config ./router/router.yaml
