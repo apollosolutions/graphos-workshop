@@ -1,6 +1,11 @@
 const { initializeApp } = require('firebase/app');
 const { signInWithEmailAndPassword, getAuth } = require('firebase/auth');
 
+function Base64DecodeUrl(str){
+    str = (str + '===').slice(0, str.length + (str.length % 4));
+    return str.replace(/-/g, '+').replace(/_/g, '/');
+}
+
 const firebaseConfig = {
     apiKey: "AIzaSyBGEWuarfRs4vVIzbdPj7EU_h3tMAVO_e4",
     authDomain: "federation-workshop.firebaseapp.com",
@@ -13,21 +18,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+
 const exec = async () => {
-    const noResp = await signInWithEmailAndPassword(auth, 'no@apolloworkshop.com', 'apolloworkshop');
-    const yesResp = await signInWithEmailAndPassword(auth, 'yes@apolloworkshop.com', 'apolloworkshop');
-    console.log(yesResp)
+    const noUserCredential = await signInWithEmailAndPassword(auth, 'no@apolloworkshop.com', 'apolloworkshop');
+    const yesUserCredential = await signInWithEmailAndPassword(auth, 'yes@apolloworkshop.com', 'apolloworkshop');
+
+    // console.log(await yesResp.user.getIdToken())
+    // console.log(await auth.currentUser.getIdToken())
+    // yesUserCredential.user.
     console.log(`
 ===== Token Generated ======
 yes@apolloworkshop.com
 -------------------------
-${yesResp.user.stsTokenManager.accessToken}
+${yesUserCredential.user.stsTokenManager.accessToken}
 -------------------------
 
 -------------------------
 no@apolloworkshop.com
 -------------------------
-${noResp.user.stsTokenManager.accessToken}
+${noUserCredential.user.stsTokenManager.accessToken}
 -------------------------
 ===========================
 `)

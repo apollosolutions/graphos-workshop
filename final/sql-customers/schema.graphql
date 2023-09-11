@@ -1,9 +1,9 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external", "@tag"])
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@requires", "@external", "@tag", "@authenticated", "@requiresScopes"])
 
 type Query {
   users: [User]
-  user(id: ID!): User
+  user(id: ID!): User @authenticated @requiresScopes(scopes: [["read:user"]])
 }
 
 """
