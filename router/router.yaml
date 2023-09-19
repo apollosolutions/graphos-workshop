@@ -32,6 +32,14 @@ authorization:
   preview_directives: 
     enabled: true
 
+# Subscription
+subscription:
+  mode:
+    passthrough:
+       # docker setup, for local setup comment out the following section
+       subgraphs:
+        products:
+         path: /
 # This is a top-level key. It MUST define at least one of the two
 # sub-keys shown, even if you don't modify its default value.
 # rhai:
