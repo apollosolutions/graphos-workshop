@@ -95,8 +95,7 @@ const resolvers = {
       return await dataSources.productsAPI.getProduct({sku: root.parent });
     },
     inStock: (root) => (root.in_stock === "1")
-  }
-  
+  },
   Subscription: {
     reviewAdded: {
       subscribe: async function* () {
