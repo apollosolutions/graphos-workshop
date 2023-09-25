@@ -13,7 +13,7 @@
   },
   "main": "src/index.js",
   "engines": {
-    "node": ">=14.0"
+    "node": ">=18.0"
   },
   "scripts": {
     "dev": "nodemon --ext \"js,graphql\" src/index.js",

@@ -5,7 +5,7 @@ const reviews = [
     id: 1,
     body: "This was a great find! would highly recommend.",
     product: {
-      id: "1",
+      id: "1"
     },
     user: {
       id: "1",

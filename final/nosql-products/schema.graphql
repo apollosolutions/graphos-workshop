@@ -136,7 +136,7 @@ type Review @key(fields: "id") {
   id: Int!
   body: String!
   product: Product!
-  user: User! 
+  user: User!
 }
 
 """
@@ -144,4 +144,11 @@ A Subscription for whenever a new review has been added.
 """
 type Subscription {
   reviewAdded: Review
+}
+
+"""
+An user account in our system
+"""
+type User @key(fields: "id") {
+  id: ID!
 }
