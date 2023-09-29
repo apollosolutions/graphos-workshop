@@ -28,7 +28,7 @@ authentication:
         - url: https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
 
 authorization:
-  require_authentication: true
+  require_authentication: false
   preview_directives: 
     enabled: true
 

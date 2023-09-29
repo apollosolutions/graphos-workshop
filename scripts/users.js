@@ -16,7 +16,7 @@ const app = initializeApp({
 const setDemoClaims = async (uid) => {
     const baseClaims = {
         premium: true,
-        scope: "write:purchase read:user read:account write:account"
+        scope: "order:items order:buyer account"
     };
 
     await getAuth()

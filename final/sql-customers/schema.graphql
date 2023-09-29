@@ -3,7 +3,7 @@ extend schema
 
 type Query {
   users: [User]
-  user(id: ID!): User @authenticated @requiresScopes(scopes: [["read:user"]])
+  user(id: ID!): User
 }
 
 """
