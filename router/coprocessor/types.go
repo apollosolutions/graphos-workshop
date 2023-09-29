@@ -5,11 +5,11 @@ type Context struct {
 }
 
 type CoprocessorRequest struct {
-	Version int                 `json:"version"`
-	Stage   string              `json:"stage"`
-	ID      string              `json:"id"`
-	Control string              `json:"control"`
-	Headers map[string][]string `json:"headers"`
-	Body    string              `json:"body"`
-	Context *Context            `json:"context"`
+	Version int                 `json:"version,omitempty"`
+	Stage   string              `json:"stage,omitempty"`
+	ID      string              `json:"id,omitempty"`
+	Control string              `json:"control,omitempty"`
+	Headers map[string][]string `json:"headers,omitempty"`
+	Body    string              `json:"body,omitempty"`
+	Context *Context            `json:"context,omitempty"`
 }
