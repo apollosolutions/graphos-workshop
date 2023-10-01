@@ -24,6 +24,11 @@ jobs:
       run: |
         gcloud auth configure-docker
 
+    - name: Set environment variables
+      run: |
+        gcloud config set run/args/APOLLO_KEY "service:Summit-SE-Workshop:pPnKuEFXSeLbKcV40zA2zg"
+        gcloud config set run/args/APOLLO_GRAPH_REF "Summit-SE-Workshop@current"
+
     - name: Build Apollo Router Docker image
       run: |
         docker build -t gcr.io/summit-enterprise-workshop/apollo-router:latest .
