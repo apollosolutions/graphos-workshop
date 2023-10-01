@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - summit-workshop
+env:
+  APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+  APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
 
 jobs:
   deploy:
@@ -23,11 +26,6 @@ jobs:
     - name: Configure Docker to use gcloud as a credential helper
       run: |
         gcloud auth configure-docker
-
-    - name: Set environment variables
-      run: |
-        gcloud config set run/args/APOLLO_KEY "service:Summit-SE-Workshop:pPnKuEFXSeLbKcV40zA2zg"
-        gcloud config set run/args/APOLLO_GRAPH_REF "Summit-SE-Workshop@current"
 
     - name: Build Apollo Router Docker image
       run: |
