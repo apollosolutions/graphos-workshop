@@ -3,7 +3,7 @@ name: Deploy Router to Cloud Run
 on:
   push:
     branches:
-      - main
+      - summit-workshop
 
 jobs:
   deploy:
