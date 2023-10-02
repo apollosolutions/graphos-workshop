@@ -1,7 +1,8 @@
 name: Create Studio Account
 
 on:
-  create: 
+  create:
+  push:
 
 jobs:
   create:
@@ -9,7 +10,8 @@ jobs:
     steps:
     - name: Create Graph in Apollo Studio
       run: |
+        echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
         curl --request POST 'https://graphql.api.apollographql.com' \
         --header 'content-type: application/json' \
         --header 'X-API-Key: 'user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:_60kU_wi1yLH1zt60UhxGg' \
-        --data '{"query":"mutation CreateGraph($graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $accountId: ID!) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title) {\n      ... on Service {\n        accountId\n      }\n    }\n      }\n    }\n   \n \n","variables":{"graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"APIGraph","title":"APITitleGraph","accountId":"summit-2023-enterprise-workshop"},"operationName":"CreateGraph"}'
+        --data '{"query":"mutation CreateGraph($graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $accountId: ID!) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title) {\n      ... on Service {\n        accountId\n      }\n    }\n      }\n    }\n   \n \n","variables":{"graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"${GITUB_ACTOR}","title":"APITitleGraph","accountId":"summit-2023-enterprise-workshop"},"operationName":"CreateGraph"}'

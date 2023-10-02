@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - summit-workshop
-env:
-  APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
-  APOLLO_GRAPH_ID: ${{ secrets.APOLLO_GRAPH_ID }}
 
 jobs:
   deploy:
