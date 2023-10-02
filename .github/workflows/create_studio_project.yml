@@ -15,3 +15,23 @@ jobs:
         --header 'content-type: application/json' \
         --header 'X-API-Key: user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:_60kU_wi1yLH1zt60UhxGg' \
         --data '{"query":"mutation CreateGraph($graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $accountId: ID!) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title) {\n      ... on Service {\n        accountId\n      }\n    }\n      }\n    }\n   \n \n","variables":{"graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"${GITUB_ACTOR}","title":"${GITHUB_ACTOR}","accountId":"summit-2023-enterprise-workshop"},"operationName":"CreateGraph"}'
+jobs:
+  publish
+    name: Rover Subgraph Publish
+    run-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install Rover
+      run: | 
+        curl -sSL https://rover.apollo.dev/nix/v0.8.1 | sh
+        echo "$HOME/.rover/bin" >> $GITHUB_PATH
+
+    - name: Rover Subgraph Publish
+      run: | 
+        rover subgraph publish ${{secrets.APOLLO_GRAPH_REF }} \
+          --name products \
+          --routing-url https://https://subgraph-products-j3nprurqka-ue.a.run.app \
+          --schema ./final/nosql-products/schema.graphql
