@@ -11,6 +11,6 @@ jobs:
       run: |
         curl --request POST \
     --header 'content-type: application/json' \
-	--header 'X-API-Key: user:po.mdg.khalsall@apollographql.com:MF2G0Lrb1PKrLwuEfK763g' \
+    --header 'X-API-Key: user:po.mdg.khalsall@apollographql.com:MF2G0Lrb1PKrLwuEfK763g' \
     --url 'https://graphql.api.apollographql.com' \
     --data '{"query":"mutation CreateGraph($graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $accountId: ID!) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title) {\n      ... on Service {\n        accountId\n      }\n    }\n      }\n    }\n   \n \n","variables":{"graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"APIGraph","title":"APITitleGraph","accountId":"summit-2023-enterprise-workshop"},"operationName":"CreateGraph"}
