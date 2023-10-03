@@ -5,7 +5,7 @@ const reviews = [
     id: 1,
     body: "This was a great find! would highly recommend.",
     product: {
-      id: "1"
+      id: "33"
     },
     user: {
       id: "1",
@@ -15,7 +15,7 @@ const reviews = [
     id: 2,
     body: "Awesome t-shirt. I really like the material",
     product: {
-     id: "2",
+     id: "161",
     },
     user: {
       id: "2",
@@ -25,20 +25,20 @@ const reviews = [
     id: 3,
     body: "Smooth! Look no further, this will answer all your questions!",
     product: {
-     id: "3",
+     id: "145",
     },
     user: {
-      id: "1",
+      id: "10",
     }, 
   },
   {
     id: 4,
     body: "So glad I found this product. Hidden gem!",
     product: {
-      id: "4",
+      id: "193",
     },
     user: {
-      id: "1",
+      id: "12",
     }, 
   },
 ];
