@@ -1,4 +1,11 @@
 const { Query } = require("./Query");
+const { dbCollection } = require("../mongoClient");
+const ProductsAPI = require("../datasources/products-api");
+
+const API = new ProductsAPI({ 
+  collection: dbCollection
+});
+
 
 const reviews = [
   {
@@ -102,7 +109,14 @@ const resolvers = {
         let count = 0;
         while (true) {
           const review = reviews[count++];
-          yield { reviewAdded: review };
+          const product = await API.getProduct({id: review.product.id});
+
+          yield { 
+            reviewAdded: {
+              ...review,
+              product
+            }
+          };
           await new Promise((resolve) => setTimeout(resolve, 3000));
           if (count === reviews.length) count = 0;
         }
