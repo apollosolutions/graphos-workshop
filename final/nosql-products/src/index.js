@@ -72,12 +72,15 @@ async function main() {
             };
           },
         },
-      ],
-    context: async ({ req }) => new ContextValue({ req, server })
+      ]
   });
 
   await server.start();
-  app.use("/", cors(), json(), expressMiddleware(server));
+  app.use("/", cors(), json(), expressMiddleware(server,
+    {
+      context: async ({ req }) => new ContextValue({ req, server })
+    }
+  ));
 
   httpServer.listen(port, () => {
     console.log(`🚀 Subgraph ready at http://localhost:${port}/`);

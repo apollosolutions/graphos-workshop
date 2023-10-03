@@ -40,9 +40,11 @@ subscription:
        subgraphs:
         products:
          path: /
-# This is a top-level key. It MUST define at least one of the two
-# sub-keys shown, even if you don't modify its default value.
-# rhai:
-#   # Specify a different Rhai script directory path with this key.
-#   # The path can be relative or absolute.
-#   scripts: "/dist/rhai/scripts"
+
+# Co Processor
+coprocessor:
+  url: https://coprocessor-wn3vwa6nlq-ue.a.run.app # Required. Replace with the URL of your coprocessor's HTTP endpoint.
+  timeout: 2s # The timeout for all coprocessor requests. Defaults to 1 second (1s)
+  router: # This coprocessor hooks into the `RouterService`
+    response: # By including this key, the `RouterService` sends a coprocessor request whenever it first receives a client request.
+      body: true # By including this key the co-processor can modify the body of the response
