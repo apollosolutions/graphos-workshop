@@ -24,16 +24,16 @@ jobs:
         run: | 
           rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name products \
-            --schema ./products-schema.graphql
+            --schema ./final/nosql-products/schema.graphql
   
       - name: Rover Subgraph Check Orders
         run: | 
           rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name orders \
-            --schema ./orders-schema.graphql
+            --schema ./rest-orders/schema.graphql
   
       - name: Rover Subgraph Check Customers
         run: |
           rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name customers \
-            --schema ./final/customers-schema.graphql
+            --schema ./final/sql-customers/schema.graphql
