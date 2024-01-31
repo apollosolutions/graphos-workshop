@@ -41,7 +41,7 @@ jobs:
 
     - name: Deploy Website to Cloud Run
       run: |
-        gcloud run deploy ${{github.actor}}-orders \
+        gcloud run deploy ${{github.actor}}-website \
           --image gcr.io/summit-enterprise-workshop/${{github.actor}}-website:latest \
           --platform managed \
           --region us-central1 \
