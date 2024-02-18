@@ -37,3 +37,9 @@ jobs:
           --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@current" --platform managed --region us-central1 \
           --allow-unauthenticated
 
+    - name: Deploy contract router to Cloud Run
+      run: |
+        gcloud run deploy ${{vars.ACTOR}}-contractRouter --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
+        --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
+        --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@public" --platform managed --region us-central1 \
+        --allow-unauthenticated
