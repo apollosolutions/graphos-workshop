@@ -1,9 +1,8 @@
 name: Deploy Website to Cloud Run
 
 on:
-    push:
-        paths:
-          - website/**
+  workflow_dispatch:
+  workflow_call:
 
 env:
   GEN: "workshop"
@@ -32,12 +31,17 @@ jobs:
       run: |
         docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-website:latest .
         docker images
-      working-directory: ./website
+      working-directory: .final/website
 
     - name: Push Docker image to Google Container Registry
       run: |
         docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-website:latest
-      working-directory: ./website
+      working-directory: ./final/website
+
+    - name: Get Router URL
+      run: | 
+        gcloud run services describe ${{vars.ACTOR}}-router --region us-central1 --format 'value(status.url)' > url.json
+        echo "URL=$(cat url.json)" >> $GITHUB_ENV
 
     - name: Deploy Website to Cloud Run
       run: |
@@ -45,9 +49,28 @@ jobs:
           --image gcr.io/summit-enterprise-workshop/${{github.actor}}-website:latest \
           --platform managed \
           --region us-central1 \
-          --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }} \
+          --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }}, ROUTER_URL=${{env.url}} \
           --allow-unauthenticated
     - name: Get URL
       run: | 
         gcloud run services describe ${{vars.ACTOR}}-website --region us-central1 --format 'value(status.url)' > url.json
-            echo "::notice URL=$(cat url.json)"
+            echo "webURL=$(cat url.json)" >> $GITHUB_ENV
+    
+    - name: Get current README to update
+      run: |
+        curl --request POST \
+        --header 'content-type: application/json' \
+        --header 'X-API-Key: user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:ftuXT6T7OktKoMaUZhQwSw' \
+        --url 'https://graphql.api.apollographql.com/api/graphql' \
+        --data '{"query":"query Query($ref: ID!) {\n  variant(ref: $ref) {\n    ... on GraphVariant {\n      readme {\n        content\n      }\n    }\n  }\n}","variables":{"ref":"${{vars.ACTOR}}${{env.GEN}}"}}' -o readme.json
+
+    - name: Set Env
+      run: echo "CONTENT=$(cat readme.json | jq .data.variant.readme.content)" >> $GITHUB_ENV
+
+    - name: Update README
+      run: |
+       curl --request POST \
+       --header 'content-type: application/json' \
+       --header 'X-API-Key: user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:ftuXT6T7OktKoMaUZhQwSw' \
+       --url 'https://graphql.api.apollographql.com/api/graphql' \
+       --data '{"query":"mutation Mutation($graphId: ID!, $name: String!, $readme: String!) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateVariantReadme(readme: $readme) {\n        readme {\n          content\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{vars.ACTOR}}${{env.GEN}}","name":"current","readme":"${{env.CONTENT}} \n###WEBSITE URL \n ${{env.webURL}}"}}'

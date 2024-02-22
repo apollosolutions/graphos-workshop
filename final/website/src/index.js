@@ -14,12 +14,12 @@ import theme from './theme.js';
 import {ChakraProvider} from '@chakra-ui/react';
 import { DEFAULT_ROUTER_URL } from './config';
 
-const routerUrl = localStorage.getItem('router-url') || DEFAULT_ROUTER_URL;
+const routerUrl = process.env.ROUTER_URL;
 
 // ----- Configure the apollo client here ------
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'https://' + routerUrl,
+  uri: routerUrl,
   name: 'web-workshop-client',
   version: '0.1'
 });
