@@ -23,7 +23,7 @@ jobs:
 
     - name: Rover Subgraph Publish Products
       run: | 
-        rover subgraph publish ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
+        rover subgraph publish ${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}@current \
           --name products \
           --convert \
           --routing-url https://subgraph-products-j3nprurqka-ue.a.run.app \
@@ -31,14 +31,14 @@ jobs:
 
     - name: Rover Subgraph Publish Orders
       run: | 
-        rover subgraph publish ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
+        rover subgraph publish ${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}@current \
           --name orders \
           --routing-url https://subgraph-orders-j3nprurqka-ue.a.run.app \
           --schema ./final/rest-orders/schema.graphql
 
     - name: Rover Subgraph Publish Customers
       run: |
-        rover subgraph publish ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
+        rover subgraph publish ${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}@current \
           --name customers \
           --routing-url https://subgraph-customers-j3nprurqka-ue.a.run.app \
           --schema ./final/sql-customers/schema.graphql

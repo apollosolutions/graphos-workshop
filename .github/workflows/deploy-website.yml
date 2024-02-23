@@ -29,31 +29,31 @@ jobs:
 
     - name: Build Website Docker image
       run: |
-        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-website:latest .
+        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest .
         docker images
       working-directory: .final/website
 
     - name: Push Docker image to Google Container Registry
       run: |
-        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-website:latest
+        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest
       working-directory: ./final/website
 
     - name: Get Router URL
       run: | 
-        gcloud run services describe ${{vars.ACTOR}}-${{vars.workshopID}}-router --region us-central1 --format 'value(status.url)' > url.json
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-router --region us-central1 --format 'value(status.url)' > url.json
         echo "URL=$(cat url.json)" >> $GITHUB_ENV
 
     - name: Deploy Website to Cloud Run
       run: |
-        gcloud run deploy ${{github.actor}}-${{vars.workshopID}}-website \
-          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-website:latest \
+        gcloud run deploy ${{github.actor}}-${{vars.WORKSHOPID}}-website \
+          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest \
           --platform managed \
           --region us-central1 \
           --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }}, ROUTER_URL=${{env.url}} \
           --allow-unauthenticated
     - name: Get URL
       run: | 
-        gcloud run services describe ${{vars.ACTOR}}-${{vars.workshopID}}-website --region us-central1 --format 'value(status.url)' > url.json
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-website --region us-central1 --format 'value(status.url)' > url.json
             echo "webURL=$(cat url.json)" >> $GITHUB_ENV
     
     - name: Get current README to update
@@ -62,7 +62,7 @@ jobs:
         --header 'content-type: application/json' \
         --header 'X-API-Key: user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:ftuXT6T7OktKoMaUZhQwSw' \
         --url 'https://graphql.api.apollographql.com/api/graphql' \
-        --data '{"query":"query Query($ref: ID!) {\n  variant(ref: $ref) {\n    ... on GraphVariant {\n      readme {\n        content\n      }\n    }\n  }\n}","variables":{"ref":"${{vars.ACTOR}}-${{vars.workshopID}}${{env.GEN}}"}}' -o readme.json
+        --data '{"query":"query Query($ref: ID!) {\n  variant(ref: $ref) {\n    ... on GraphVariant {\n      readme {\n        content\n      }\n    }\n  }\n}","variables":{"ref":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{env.GEN}}"}}' -o readme.json
 
     - name: Set Env
       run: echo "CONTENT=$(cat readme.json | jq .data.variant.readme.content)" >> $GITHUB_ENV
@@ -73,4 +73,4 @@ jobs:
        --header 'content-type: application/json' \
        --header 'X-API-Key: user:fp.d88ba77d-487c-4b97-9780-f1e4c5352a22:ftuXT6T7OktKoMaUZhQwSw' \
        --url 'https://graphql.api.apollographql.com/api/graphql' \
-       --data '{"query":"mutation Mutation($graphId: ID!, $name: String!, $readme: String!) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateVariantReadme(readme: $readme) {\n        readme {\n          content\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{vars.ACTOR}}-${{vars.workshopID}}${{env.GEN}}","name":"current","readme":"${{env.CONTENT}} \n###WEBSITE URL \n ${{env.webURL}}"}}'
+       --data '{"query":"mutation Mutation($graphId: ID!, $name: String!, $readme: String!) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateVariantReadme(readme: $readme) {\n        readme {\n          content\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{env.GEN}}","name":"current","readme":"${{env.CONTENT}} \n###WEBSITE URL \n ${{env.webURL}}"}}'
