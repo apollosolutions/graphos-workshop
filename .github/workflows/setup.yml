@@ -7,7 +7,7 @@ on:
       - '**.yml'
 
 env:
-  GEN: "workshop"
+  GEN: ""
 
 jobs:
   create:
@@ -35,14 +35,14 @@ jobs:
         curl --request POST 'https://graphql.api.apollographql.com' \
         --header 'content-type: application/json' \
         --header 'X-API-Key: ${{ secrets.APOLLO_USER_KEY }}' \
-        --data '{"query":"mutation Mutation($accountId: ID!, $graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $variantCreationConfig: VariantCreationConfig) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title, variantCreationConfig: $variantCreationConfig) {\n      __typename\n      ... on Service {\n        __typename\n        id\n      }\n      ... on GraphCreationError {\n        __typename\n        message\n      }\n    }\n  }\n}","variables":{"accountId":"${{ secrets.APOLLO_ACCOUNT }}","graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"${{env.ACTOR}}${{ env.GEN }}","title":"${{env.ACTOR}} - ${{ env.GEN }}","variantCreationConfig":{"variantName":"current","buildConfigInput":{"apiDirectivePassThrough":[],"buildPipelineTrack":null,"composition":{"subgraphs":[]}}}}}'
+        --data '{"query":"mutation Mutation($accountId: ID!, $graphType: GraphType!, $hiddenFromUninvitedNonAdmin: Boolean!, $createGraphId: ID!, $title: String!, $variantCreationConfig: VariantCreationConfig) {\n  account(id: $accountId) {\n    createGraph(graphType: $graphType, hiddenFromUninvitedNonAdmin: $hiddenFromUninvitedNonAdmin, id: $createGraphId, title: $title, variantCreationConfig: $variantCreationConfig) {\n      __typename\n      ... on Service {\n        __typename\n        id\n      }\n      ... on GraphCreationError {\n        __typename\n        message\n      }\n    }\n  }\n}","variables":{"accountId":"${{ secrets.APOLLO_ACCOUNT }}","graphType":"SELF_HOSTED_SUPERGRAPH","hiddenFromUninvitedNonAdmin":false,"createGraphId":"${{env.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}","title":"${{env.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}","variantCreationConfig":{"variantName":"current","buildConfigInput":{"apiDirectivePassThrough":[],"buildPipelineTrack":null,"composition":{"subgraphs":[]}}}}}'
 
     - name: Create Empty Contract in Apollo Studio
       run: |
         curl --request POST 'https://graphql.api.apollographql.com/api/graphql' \
         --header 'content-type: application/json' \
         --header 'X-API-Key: ${{ secrets.APOLLO_USER_KEY }}' \
-        --data '{"query":"mutation Mutation($graphId: ID!, $contractVariantName: String!, $sourceVariant: String, $initiateLaunch: Boolean!, $filterConfig: FilterConfigInput!) {\n  graph(id: $graphId) {\n    upsertContractVariant(contractVariantName: $contractVariantName, sourceVariant: $sourceVariant, initiateLaunch: $initiateLaunch, filterConfig: $filterConfig) {\n      ... on ContractVariantUpsertSuccess {\n        contractVariant {\n          name\n          id\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{env.ACTOR}}${{ env.GEN }}","contractVariantName":"Public","sourceVariant":"${{env.ACTOR}}${{ env.GEN }}@current","initiateLaunch":true,"filterConfig":{"exclude":[],"hideUnreachableTypes":false,"include":[]}}}'
+        --data '{"query":"mutation Mutation($graphId: ID!, $contractVariantName: String!, $sourceVariant: String, $initiateLaunch: Boolean!, $filterConfig: FilterConfigInput!) {\n  graph(id: $graphId) {\n    upsertContractVariant(contractVariantName: $contractVariantName, sourceVariant: $sourceVariant, initiateLaunch: $initiateLaunch, filterConfig: $filterConfig) {\n      ... on ContractVariantUpsertSuccess {\n        contractVariant {\n          name\n          id\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{env.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}","contractVariantName":"Public","sourceVariant":"${{env.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current","initiateLaunch":true,"filterConfig":{"exclude":[],"hideUnreachableTypes":false,"include":[]}}}'
   
   keys:
     needs: create
@@ -63,7 +63,7 @@ jobs:
         curl --request POST 'https://graphql.api.apollographql.com' \
         --header 'content-type: application/json' \
         --header 'X-API-Key: ${{ secrets.APOLLO_USER_KEY }}' \
-        --data '{"query":"mutation Mutation($graphId: ID!, $keyName: String, $role: UserPermission!) {\n  graph(id: $graphId) {\n    newKey(keyName: $keyName, role: $role) {\n      token\n    }\n  }\n}","variables":{"graphId":"${{env.ACTOR}}${{ env.GEN }}","keyName":"my-first-key","role":"CONTRIBUTOR"}}' -o token.json
+        --data '{"query":"mutation Mutation($graphId: ID!, $keyName: String, $role: UserPermission!) {\n  graph(id: $graphId) {\n    newKey(keyName: $keyName, role: $role) {\n      token\n    }\n  }\n}","variables":{"graphId":"${{env.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}","keyName":"my-first-key","role":"CONTRIBUTOR"}}' -o token.json
         cat token.json
 
     - name: Set Env

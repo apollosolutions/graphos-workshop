@@ -5,7 +5,7 @@ on:
   workflow_call:
 
 env:
-  GEN: "workshop"
+  GEN: ""
   APOLLO_KEY: ${{ vars.TOKEN }}
   
 jobs:
@@ -22,18 +22,18 @@ jobs:
   
       - name: Rover Subgraph Check Products
         run: | 
-          rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
+          rover subgraph check ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
             --name products \
             --schema ./final/nosql-products/schema.graphql
   
       - name: Rover Subgraph Check Orders
         run: | 
-          rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
+          rover subgraph check ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
             --name orders \
             --schema ./rest-orders/schema.graphql
   
       - name: Rover Subgraph Check Customers
         run: |
-          rover subgraph check ${{vars.ACTOR}}${{ env.GEN }}@current \
+          rover subgraph check ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
             --name customers \
             --schema ./final/sql-customers/schema.graphql

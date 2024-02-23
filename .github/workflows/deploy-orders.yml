@@ -6,7 +6,7 @@ on:
           - rest-orders/**
 
 env:
-  GEN: "workshop"
+  GEN: ""
 
 jobs:
   deploy:
@@ -30,30 +30,30 @@ jobs:
 
     - name: Build Order Subgraph Docker image
       run: |
-        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-orders:latest .
+        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-orders:latest .
         docker images
       working-directory: ./rest-orders
 
     - name: Push Docker image to Google Container Registry
       run: |
-        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-orders:latest
+        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-orders:latest
       working-directory: ./rest-orders
 
     - name: Deploy Orders subgraph to Cloud Run
       run: |
-        gcloud run deploy ${{github.actor}}-orders \
-          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-orders:latest \
+        gcloud run deploy ${{github.actor}}-${{vars.workshopID}}-orders \
+          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.workshopID}}-orders:latest \
           --platform managed \
           --region us-central1 \
           --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }} \
           --allow-unauthenticated
     - name: Get URL
       run: | 
-        gcloud run services describe ${{vars.ACTOR}}-orders --region us-central1 --format 'value(status.url)' > url.json
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.workshopID}}-orders --region us-central1 --format 'value(status.url)' > url.json
             echo "URL=$(cat url.json)" >> $GITHUB_ENV
     - name: Rover Subgraph Publish Orders
       run: | 
-        rover subgraph publish ${{vars.ACTOR}}${{ env.GEN }}@current \
+        rover subgraph publish ${{vars.ACTOR}}-${{vars.workshopID}}${{ env.GEN }}@current \
           --name orders \
           --routing-url  ${{ env.URL }} \
           --schema ./rest-orders/schema.graphql

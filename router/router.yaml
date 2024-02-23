@@ -12,27 +12,14 @@ homepage:
   enabled: false
 
 cors:
-  allow_any_origin: true
+  origins:
+    - https://studio.apollographql.com
+  allow_credentials: true
 
 # This would make debugging easier, but should be a per subgraph basis for production
 include_subgraph_errors:
   all: true # Propagate errors from all subgraphs
 
-## Authentication Module
-authentication:
-  router:
-    jwt:
-      header_name: Authorization
-      header_value_prefix: Bearer
-      jwks:
-        - url: https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
-
-authorization:
-  require_authentication: false
-  preview_directives: 
-    enabled: true
-
-# Subscription
 subscription:
   mode:
     passthrough:
@@ -41,10 +28,5 @@ subscription:
         products:
          path: /
 
-# Co Processor
-coprocessor:
-  url: https://coprocessor-wn3vwa6nlq-ue.a.run.app # Required. Replace with the URL of your coprocessor's HTTP endpoint.
-  timeout: 2s # The timeout for all coprocessor requests. Defaults to 1 second (1s)
-  router: # This coprocessor hooks into the `RouterService`
-    response: # By including this key, the `RouterService` sends a coprocessor request whenever it first receives a client request.
-      body: true # By including this key the co-processor can modify the body of the response
+## Enter Workshop Module Configs Below
+

@@ -5,7 +5,7 @@ on:
   workflow_call:
 
 env:
-  GEN: "workshop"
+  GEN: ""
 
 jobs:
   deploy:
@@ -32,14 +32,14 @@ jobs:
 
     - name: Depoy Apollo Router to Cloud Run
       run: |
-        gcloud run deploy ${{vars.ACTOR}}-router --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
+        gcloud run deploy ${{vars.ACTOR}}-${{vars.workshopID}}-router --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
           --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
-          --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@current" --platform managed --region us-central1 \
+          --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}-${{vars.workshopID}}${{env.GEN}}@current" --platform managed --region us-central1 \
           --allow-unauthenticated
 
     - name: Deploy contract router to Cloud Run
       run: |
         gcloud run deploy ${{vars.ACTOR}}-contractRouter --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
         --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
-        --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@public" --platform managed --region us-central1 \
+        --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}-${{vars.workshopID}}${{env.GEN}}@public" --platform managed --region us-central1 \
         --allow-unauthenticated
