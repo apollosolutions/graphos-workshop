@@ -70,7 +70,7 @@ jobs:
 
       - name: Get Contract Router URL
         run: |
-          gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-contractRouter --region us-central1 --format 'value(status.url)' > contractURL.json
+          gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-contractrouter --region us-central1 --format 'value(status.url)' > contractURL.json
           echo "contractURL=$(cat contractURL.json)" >> $GITHUB_ENV
 
       - name: Set URL
