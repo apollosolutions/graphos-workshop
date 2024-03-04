@@ -79,7 +79,7 @@ jobs:
             --header 'content-type: application/json' \
             --header 'X-API-Key: ${{ secrets.APOLLO_USER_KEY }}' \
             --url 'https://graphql.api.apollographql.com/api/graphql' \
-            --data '{"query":"mutation UpdateURL($name: String!, $graphId: ID!, $url: String) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateURL(url: $url) {\n        createdAt\n      }\n    }\n  }\n}","variables":{"name":"public","graphId":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}","url":"${{ env.URL }}"}}'
+            --data '{"query":"mutation UpdateURL($name: String!, $graphId: ID!, $url: String) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateURL(url: $url) {\n        createdAt\n      }\n    }\n  }\n}","variables":{"name":"Public","graphId":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}","url":"${{ env.URL }}"}}'
   
 
       - name: Set Subscription URL
