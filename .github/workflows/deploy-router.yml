@@ -33,6 +33,7 @@ jobs:
     - name: Depoy Apollo Router to Cloud Run
       run: |
         gcloud run deploy ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-router --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
+          --command=/dist/router \
           --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
           --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{env.GEN}}@current" --platform managed --region us-central1 \
           --allow-unauthenticated
@@ -40,6 +41,7 @@ jobs:
     - name: Deploy contract router to Cloud Run
       run: |
         gcloud run deploy ${{vars.ACTOR}}-contractRouter --image gcr.io/summit-enterprise-workshop/jesse-apollo-router:latest \
+        --command=/dist/router \
         --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
         --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=true,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{env.GEN}}@public" --platform managed --region us-central1 \
         --allow-unauthenticated
