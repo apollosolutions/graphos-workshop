@@ -90,6 +90,11 @@ jobs:
             --url 'https://graphql.api.apollographql.com/api/graphql' \
             --data '{"query":"mutation Mutation($graphId: ID!, $name: String!, $subscriptionUrl: String) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateSubscriptionURL(subscriptionUrl: $subscriptionUrl) {\n        createdAt\n      }\n    }\n  }\n}","variables":{"graphId":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}","name":"current","subscriptionUrl":"${{ env.URL }}"}}'
   
+  deployWebsite:
+    needs: install-url
+    uses: ./.github/workflows/deploy-website.yml
+    secrets: inherit
+    
   preflightScript:
     needs: publish
     runs-on: ubuntu-latest
