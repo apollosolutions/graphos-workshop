@@ -10,6 +10,9 @@ deploy-orders:
 deploy-customers:
 	gcloud builds submit --config ./deploy/customers.yaml
 
+deploy-classes:
+	gcloud builds submit --config ./deploy/classes.yaml
+
 deploy-router:
 	echo "Running Google Cloud Build" && \
 	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
@@ -30,6 +33,12 @@ publish-products:
 	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./final/nosql-products/schema.graphql \
   	--name products --routing-url https://subgraph-products-j3nprurqka-ue.a.run.app
+
+publish-classes:
+	APOLLO_KEY=$(APOLLO_KEY) \
+	rover subgraph publish $(APOLLO_GRAPH_REF) \
+ 	--schema ./final/lowdb-classes/schema.graphql \
+  	--name classes --routing-url https://subgraph-classes-j3nprurqka-ue.a.run.app
 
 publish-orders:
 	APOLLO_KEY=$(APOLLO_KEY) \
