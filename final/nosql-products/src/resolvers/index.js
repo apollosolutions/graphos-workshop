@@ -104,7 +104,7 @@ const resolvers = {
     inStock: (root) => (root.in_stock === "1")
   },
   Subscription: {
-    reviewAdded: {
+    active: {
       subscribe: async function* () {
         let count = 0;
         while (true) {
@@ -122,6 +122,11 @@ const resolvers = {
         }
       },
     },
+    inactive: {
+      subscribe: async function () {
+        return {};
+      },
+    }
   }
 };
 
