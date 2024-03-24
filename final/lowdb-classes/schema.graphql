@@ -1,0 +1,47 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key"])
+
+type Query {
+  """
+  Get a specific order by id. Meant to be used for a detailed view of an order
+  """
+  getClassById(id: ID!): Class
+  classes: [Class]
+}
+
+type Mutation {
+  """
+  Get a specific order by id. Meant to be used for a detailed view of an order
+  """
+  createClass(class: ClassDetails!): Class
+  updateClass(id: ID!, class: ClassDetails!): Class
+}
+
+input ClassDetails {
+  name: String!
+  description: String!
+  price: Float!
+  attendees: [ID]
+}
+
+"""
+Returns information about a specific purchase
+"""
+type Order @key(fields: "id") {
+  """
+  Each order has a unique id which is separate from the user or items they bought
+  """
+  id: ID!
+}
+
+type Class @key(fields: "id") {
+  id: ID!
+  name: String!
+  description: String!
+  attendees: [User]!
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  classes: [Class]!
+}

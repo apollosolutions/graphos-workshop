@@ -1,0 +1,18 @@
+{
+  "classes": [
+    {
+      "id": "b4fd601c-7464-4090-ab57-77be4599021b",
+      "name": "Kickbox 101",
+      "description": "Learn to kickbox!",
+      "price": 35,
+      "attendees": [
+        {
+          "id": "1"
+        },
+        {
+          "id": "12"
+        }
+      ]
+    }
+  ]
+}
