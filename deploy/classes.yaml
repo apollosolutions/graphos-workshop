@@ -11,4 +11,4 @@ steps:
   entrypoint: gcloud
   args: ['run', 'deploy', 'subgraph-classes', '--image', 'gcr.io/federation-workshop/classes','--allow-unauthenticated', '--region', 'us-east1']
 images:
-- gcr.io/federation-workshop/products
+- gcr.io/federation-workshop/classes
