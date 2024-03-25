@@ -2,15 +2,41 @@
   "classes": [
     {
       "id": "b4fd601c-7464-4090-ab57-77be4599021b",
-      "name": "Kickbox 101",
-      "description": "Learn to kickbox!",
-      "price": 35,
+      "name": "Zumba 101",
+      "description": "Zumba® fuses hypnotic latin rhythms and easy to follow moves to create a dynamic fitness program that will blow you away. The routines feature interval training sessions where fast and slow rhythms, and resistance training are combined to tone and sculpt your body while burning fat. Add some Latin flavor and international zest into the mix and you've got Zumba®!",
+      "price": 10,
       "attendees": [
         {
           "id": "1"
         },
         {
           "id": "12"
+        },
+        {
+          "id": "13"
+        }
+      ]
+    },
+    {
+      "id": "asd12021-7464-4090-ab57-asdas0222",
+      "name": "Fit Yoga",
+      "description": "We’ll incorporate additional strength moves (like push-ups) and keep moving between poses to get your heart rate up while focusing on stretching and flexibility.",
+      "price": 5,
+      "attendees": [
+        {
+          "id": "4"
+        },
+        {
+          "id": "15"
+        },
+        {
+          "id": "6"
+        },
+        {
+          "id": "12"
+        },
+        {
+          "id": "8"
         }
       ]
     }

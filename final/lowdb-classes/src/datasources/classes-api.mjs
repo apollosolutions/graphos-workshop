@@ -21,12 +21,18 @@ class ClassAPI {
     const db = await JSONFilePreset('db.json', { classes: [] });
     const id = uuidv4();
 
+    const attendeeFormat = attendees.map((attendee) => ({ id: attendee }));
     // Simulate slowness
     await setTimeout(() => {}, 2000);
-    db.data.classes.push({ id, name, description, price, attendees });
+    db.data.classes.push({ id, name, description, price, attendees: attendeeFormat });
     await db.write();
+    // Delete the event in 20 minutes
+    setTimeout(() => {
+      db.data.classes = db.data.classes.filter((classes) => classes.id !== id);
+      db.write();
+    }, 1200000);
     // Iterate over the attendees and provide just the ids
-    return { id, name, description, price, attendees: attendees.map(id => { id }) };
+    return { id, name, description, price, attendees: attendeeFormat };
   }
 
   async getUserClasses(userId) {

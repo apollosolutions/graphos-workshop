@@ -38,7 +38,7 @@ publish-classes:
 	APOLLO_KEY=$(APOLLO_KEY) \
 	rover subgraph publish $(APOLLO_GRAPH_REF) \
  	--schema ./final/lowdb-classes/schema.graphql \
-  	--name classes --routing-url https://subgraph-classes-j3nprurqka-ue.a.run.app
+  	--name classes --routing-url  https://subgraph-classes-j3nprurqka-ue.a.run.app
 
 publish-orders:
 	APOLLO_KEY=$(APOLLO_KEY) \
