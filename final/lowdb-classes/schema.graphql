@@ -13,8 +13,8 @@ type Mutation {
   """
   Get a specific order by id. Meant to be used for a detailed view of an order
   """
-  createClass(class: ClassDetails!): Class
-  updateClass(id: ID!, class: ClassDetails!): Class
+  createClass(classDetails: ClassDetails!): Class
+  updateClass(id: ID!, classDetails: ClassDetails!): Class
 }
 
 input ClassDetails {

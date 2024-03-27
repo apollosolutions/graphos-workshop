@@ -7,7 +7,10 @@ const resolvers = {
   Mutation: {
     // Creates a new class
     createClass: async (_, args, { dataSources }) => {
-      return await dataSources.classAPI.createClass(args.class);
+      return await dataSources.classAPI.createClass(args.classDetails);
+    },
+    updateClass: async (_, args, { dataSources }) => {
+      return await dataSources.classAPI.updateClass(args);
     }
   },
   User: {

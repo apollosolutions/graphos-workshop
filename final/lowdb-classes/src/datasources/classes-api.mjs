@@ -1,5 +1,4 @@
 import { JSONFilePreset } from 'lowdb/node';
-import { v4 as uuidv4 } from 'uuid';
 
 class ClassAPI {
   constructor() {
@@ -8,7 +7,34 @@ class ClassAPI {
   async getClass(id) {
     const db = await JSONFilePreset('db.json', { classes: [] });
 
-    return db.classes.find((classes) => classes.id === id);
+    return db.data.classes.find((classes) => classes.id === id);
+  }
+
+  async updateClass({ id, classDetails }) {
+    const db = await JSONFilePreset('db.json', { classes: [] });
+    const { name, description, price, attendees } = classDetails;
+    const classInstance = db.data.classes.find((classInstance) => classInstance.id === id);
+    console.log(classInstance);
+
+    const updatedClass = {
+      ...classInstance,
+      ...(name && { name }),
+      ...(description && { description }),
+      ...(price && { price }),
+      ...(attendees && { attendees }),
+    };
+
+    db.data.classes = db.data.classes.map((classInstance) => {
+        if (classInstance.id === id) {
+          return updatedClass;
+        }
+        return classInstance;
+    });
+
+    db.write();
+    await new Promise(resolve => setTimeout(resolve, 6000));
+
+    return updatedClass;
   }
 
   async getClasses() {
@@ -19,11 +45,11 @@ class ClassAPI {
 
   async createClass({ name, description, price, attendees }) {
     const db = await JSONFilePreset('db.json', { classes: [] });
-    const id = uuidv4();
+    const id = (db.data.classes.length + 1).toString();
 
     const attendeeFormat = attendees.map((attendee) => ({ id: attendee }));
     // Simulate slowness
-    await setTimeout(() => {}, 2000);
+    await new Promise(resolve => setTimeout(resolve, 5000));
     db.data.classes.push({ id, name, description, price, attendees: attendeeFormat });
     await db.write();
     // Delete the event in 20 minutes

@@ -70,6 +70,8 @@ class ProductsAPI extends MongoDataSource {
   }
 
   async getProductVariants(parentSku) {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
     const variations = await this.findByFields({
       type: "variation",
       parent: parentSku

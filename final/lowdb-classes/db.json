@@ -1,7 +1,7 @@
 {
   "classes": [
     {
-      "id": "b4fd601c-7464-4090-ab57-77be4599021b",
+      "id": "1",
       "name": "Zumba 101",
       "description": "Zumba® fuses hypnotic latin rhythms and easy to follow moves to create a dynamic fitness program that will blow you away. The routines feature interval training sessions where fast and slow rhythms, and resistance training are combined to tone and sculpt your body while burning fat. Add some Latin flavor and international zest into the mix and you've got Zumba®!",
       "price": 10,
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "id": "asd12021-7464-4090-ab57-asdas0222",
+      "id": "2",
       "name": "Fit Yoga",
       "description": "We’ll incorporate additional strength moves (like push-ups) and keep moving between poses to get your heart rate up while focusing on stretching and flexibility.",
       "price": 5,
