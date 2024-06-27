@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@authenticated", "@requiresScopes"])
+  @link(url: "https://specs.apollo.dev/federation/v2.8", import: ["@key", "@authenticated", "@requiresScopes", "@tag"])
 
 type Query {
   """
@@ -31,6 +31,8 @@ type Order @key(fields: "id") {
 
 type User @key(fields: "id", resolvable: false) {
   id: ID!
+  phone: String @tag(name: "private")
+  email: String! @tag(name: "private")
 }
 
 type ProductVariant @key(fields: "id", resolvable: false) {

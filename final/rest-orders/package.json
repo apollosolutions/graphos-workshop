@@ -23,7 +23,7 @@
   "dependencies": {
     "@apollo/datasource-rest": "^4.3.2",
     "@apollo/server": "^4.0.0",
-    "@apollo/subgraph": "latest",
+    "@apollo/subgraph": "^2.8.1",
     "graphql": "latest",
     "graphql-tag": "latest"
   },
