@@ -15,8 +15,9 @@ type User @key(fields: "id") {
   firstName: String @tag(name: "private")
   lastName: String @tag(name: "private")
   address: String @tag(name: "private")
-  phone: String @tag(name: "private")
-  email: String! @tag(name: "private")
+  phone: String @tag(name: "private") @override(from: "orders", label: "percent(50)")
+  email: String! @tag(name: "private") @override(from: "orders", label: "percent(50)")
+
 
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order

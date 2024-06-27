@@ -18,6 +18,8 @@ const resolvers = {
 
       return cart;
     },
+    phone: (root) => root.phone + '__ from customers subgraph',
+    email: (root) => root.email + '__ from customers subgraph',
     firstName: (root) => root.first_name,
     lastName: (root) => root.last_name,
     orders: (root) => {
