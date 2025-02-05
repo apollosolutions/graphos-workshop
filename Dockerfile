@@ -1,4 +1,4 @@
-FROM node:19-buster-slim
+FROM node:20-buster-slim
 ENV PORT 3200
 ARG SUBGRAPH_DIR
 ## Only used in Customers
