@@ -1,11 +1,11 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@authenticated", "@requiresScopes"])
 
 type Query {
   """
   Get a specific order by id. Meant to be used for a detailed view of an order
   """
-  order(id: ID!): Order
+  order(id: ID!): Order @authenticated
 }
 
 """
@@ -20,13 +20,13 @@ type Order @key(fields: "id") {
   """
   The user who made the purchase
   """
-  buyer: User!
+  buyer: User! @requiresScopes(scopes: [["order:buyer"]])
 
   """
   A list of all the items they purchased. This is the Variants, not the Products so we know exactly which
   product and which size/color/feature was bought
   """
-  items: [ProductVariant!]!
+  items: [ProductVariant!]! @requiresScopes(scopes: [["order:items"]])
 }
 
 type User @key(fields: "id", resolvable: false) {

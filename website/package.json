@@ -24,7 +24,7 @@
     },
     "scripts": {
         "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-        "build": "react-scripts build",
+        "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -47,8 +47,8 @@
         ]
     },
     "devDependencies": {
-        "@trevorblades/eslint-config": "^7.2.8",
-        "eslint": "^7.32.0",
-        "eslint-plugin-jsx-a11y": "^6.5.1"
+        "@trevorblades/eslint-config": "7.2.8",
+        "eslint": "7.32.0",
+        "eslint-plugin-jsx-a11y": "6.7.0"
     }
 }

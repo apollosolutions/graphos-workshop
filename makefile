@@ -20,9 +20,9 @@ deploy-website:
 	gcloud builds submit --config ./final/website/cloudbuild.yaml
 
 deploy-contract:
-        echo "Running Google Cloud Build" && \
-        gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
-        --config ./router/contract.yaml
+	echo "Running Google Cloud Build" && \
+	gcloud builds submit --substitutions=_APOLLO_KEY=${APOLLO_KEY},_APOLLO_GRAPH_REF=${APOLLO_GRAPH_REF} \
+	--config ./router/contract.yaml
 
 # Publish Schema to Apollo Studio
 publish-products:
@@ -50,3 +50,6 @@ check:
 delete-users:
 	APOLLO_KEY=$(APOLLO_KEY) \
 	rover subgraph delete --name orders $(APOLLO_GRAPH_REF)
+
+test-router-local:
+	APOLLO_KEY=$(APOLLO_KEY) APOLLO_GRAPH_REF=$(APOLLO_GRAPH_REF) ./router/router --config ./router/router.yaml

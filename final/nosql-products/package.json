@@ -13,7 +13,7 @@
   },
   "main": "src/index.js",
   "engines": {
-    "node": ">=14.0"
+    "node": ">=18.0"
   },
   "scripts": {
     "dev": "nodemon --ext \"js,graphql\" src/index.js",
@@ -25,9 +25,15 @@
     "@apollo/server": "^4.0.0",
     "@apollo/subgraph": "latest",
     "apollo-datasource-mongodb": "^0.5.4",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "graphql": "latest",
+    "graphql-subscriptions": "^2.0.0",
     "graphql-tag": "latest",
-    "mongodb": "^4.12.1"
+    "graphql-ws": "^5.12.1",
+    "mongodb": "^4.12.1",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
     "jest": "29.3.1",

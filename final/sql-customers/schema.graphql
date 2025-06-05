@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@requires", "@external", "@tag"])
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@requires", "@external", "@tag", "@authenticated", "@requiresScopes"])
 
 type Query {
   users: [User]
@@ -27,6 +27,8 @@ type User @key(fields: "id") {
   The users previous purchases
   """
   orders(filters: OrderFilters): [Order]
+
+  paymentMethods: [PaymentMethod]
 }
 
 """
@@ -61,4 +63,9 @@ type Order @key(fields: "id", resolvable: false) {
 type ProductVariant @key(fields: "id", resolvable: false) {
   id: ID!
   price: Float! @external
+}
+
+type PaymentMethod {
+  id: ID!
+  cardNumber: String!
 }

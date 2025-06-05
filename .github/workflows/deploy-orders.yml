@@ -1,0 +1,60 @@
+name: Deploy Orders to Cloud Run
+
+on:
+    push:
+        paths:
+          - rest-orders/**
+
+env:
+  GEN: ""
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - id: "auth"
+      uses: "google-github-actions/auth@v0"
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+
+    - name: Configure Docker to use gcloud as a credential helper
+      run: |
+        gcloud auth configure-docker
+
+    - name: Build Order Subgraph Docker image
+      run: |
+        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-orders:latest .
+        docker images
+      working-directory: ./rest-orders
+
+    - name: Push Docker image to Google Container Registry
+      run: |
+        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-orders:latest
+      working-directory: ./rest-orders
+
+    - name: Deploy Orders subgraph to Cloud Run
+      run: |
+        gcloud run deploy ${{github.actor}}-${{vars.WORKSHOPID}}-orders \
+          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-orders:latest \
+          --platform managed \
+          --region us-central1 \
+          --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }} \
+          --allow-unauthenticated
+    - name: Get URL
+      run: | 
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-orders --region us-central1 --format 'value(status.url)' > url.json
+            echo "URL=$(cat url.json)" >> $GITHUB_ENV
+    - name: Rover Subgraph Publish Orders
+      run: | 
+        rover subgraph publish ${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{ env.GEN }}@current \
+          --name orders \
+          --routing-url  ${{ env.URL }} \
+          --schema ./rest-orders/schema.graphql
+

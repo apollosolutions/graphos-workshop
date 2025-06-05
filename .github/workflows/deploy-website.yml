@@ -1,0 +1,62 @@
+name: Deploy Website to Cloud Run
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+env:
+  GEN: ""
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - id: "auth"
+      uses: "google-github-actions/auth@v0"
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Configure Docker to use gcloud as a credential helper
+      run: |
+        gcloud auth configure-docker
+
+    - name: Build Website Docker image
+      run: |
+        docker build -t gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest .
+        docker images
+      working-directory: ./final/website
+
+    - name: Push Docker image to Google Container Registry
+      run: |
+        docker push gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest
+      working-directory: ./final/website
+
+    - name: Get Router URL
+      run: | 
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-router --region us-central1 --format 'value(status.url)' > url.json
+        echo "URL=$(cat url.json)" >> $GITHUB_ENV
+
+    - name: Deploy Website to Cloud Run
+      run: |
+        gcloud run deploy ${{github.actor}}-${{vars.WORKSHOPID}}-website \
+          --image gcr.io/summit-enterprise-workshop/${{github.actor}}-${{vars.WORKSHOPID}}-website:latest \
+          --platform managed \
+          --region us-central1 \
+          --update-env-vars APOLLO_KEY=${{ secrets.APOLLO_KEY }},APOLLO_GRAPH_REF=${{ secrets.APOLLO_GRAPH_REF }},ROUTER_URL=${{env.url}} \
+          --allow-unauthenticated
+    - name: Get URL
+      run: | 
+        gcloud run services describe ${{vars.ACTOR}}-${{vars.WORKSHOPID}}-website --region us-central1 --format 'value(status.url)' > url.json
+            echo "webURL=$(cat url.json)" >> $GITHUB_ENV
+    
+    - name: Update README
+      run: |
+       curl --request POST \
+       --header 'content-type: application/json' \
+       --header 'X-API-Key: ${{ secrets.APOLLO_KEY }}' \
+       --url 'https://graphql.api.apollographql.com/api/graphql' \
+       --data '{"query":"mutation Mutation($graphId: ID!, $name: String!, $readme: String!) {\n  graph(id: $graphId) {\n    variant(name: $name) {\n      updateVariantReadme(readme: $readme) {\n        readme {\n          content\n        }\n      }\n    }\n  }\n}","variables":{"graphId":"${{vars.ACTOR}}-${{vars.WORKSHOPID}}${{env.GEN}}","name":"current","readme":"# Getting started\nWelcome to the **{{ graph.name }}** API! 🎉 Get familiar with available objects in the [Schema Reference]({{ graph.url.reference }}), or try querying this graph using [Explorer]({{ graph.url.explorer }}).\n\nThis is the default README content. You can customize it however you like. Graph Maintainers, you can edit to include any information that is relevant for developers working with this graph by clicking the pencil icon in the top right corner. ☝\n\n## What this graph is all about\n\nDescribe the purpose and use cases for your graph here. This is where you can tell the story of your API, and all of its deep magic...🦄🌌✨\n\n## Accessing the graph\n\n🛰 You can send operations to this graph at `{{ graph.url.endpoint }}`\n\n📇 The Apollo Registry holds the canonical location of your schema. In the registry, this graph is referred to by its “graph ref”, which is: **{{ graph.ref }}**.\n\n*(Note: you can [download Rover](https://www.apollographql.com/docs/rover/getting-started/), the Apollo CLI tool for working with your schema locally.)*\n\n## How to authenticate to this graph\nAuthentication information has not been added to this README yet. Be sure to let your API developers know how to authenticate, and where to find the auth tokens they’ll need to authenticate with.🔐 👀\n\n## Running operations\nInclude some operations in your README to help your API developers get started with your graph. Using a code block designated as  ````gql` will render the operation with the Run in Explorer mini-button, and will load the operation in Explorer when clicked!\n\n```gql\nquery Query {\n\tid\n}\n```\n\n### Getting help with this graph\nFor support working with this graph, contact the Graph Admin via [email(replace me)](mailto:email@email.com) or [chat(put your chat link here)](#chatlink).\n\n###WEBSITE URL \n ${{env.webURL}}"}}'
