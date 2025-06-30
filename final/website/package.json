@@ -48,7 +48,7 @@
     },
     "devDependencies": {
         "@trevorblades/eslint-config": "7.2.8",
-        "eslint": "7.32.0",
+        "eslint": "8.57.0",
         "eslint-plugin-jsx-a11y": "6.7.0"
     }
 }
